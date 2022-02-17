@@ -93,7 +93,7 @@ section {
 
 .banner .content {
     background:linear-gradient(rgb(255, 255, 255), rgba(255, 255, 255, 0.5));
-    max-width: 50%;
+    max-width: 30%;
     text-align: center;
     padding: 50vh 5rem;
 }

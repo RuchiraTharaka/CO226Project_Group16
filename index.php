@@ -38,26 +38,10 @@
     </section>
 
     <section class="container">
-        <h3>upcoming sessions...</h3>
+        <h3>upcoming sessions</h3>
         <div class="session-one">
             <h5>session 1</h5>
             <table>
-                <tr>
-                    <td>date:</td>
-                    <td>12-12-2022</td>
-                </tr>
-                <tr>
-                    <td>time:</td>
-                    <td>12:30:00</td>
-                </tr>
-                <tr>
-                    <td>topic:</td>
-                    <td>introduction to arduino</td>
-                </tr>
-                <tr>
-                    <td>center name:</td>
-                    <td>mawanella central college</td>
-                </tr>
             </table>
         </div>
     </section>
