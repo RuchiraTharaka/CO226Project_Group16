@@ -33,18 +33,51 @@
         <div class="content">
             <h3>NENA SALA TUTORING PROJECT</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In facilis voluptatibus, assumenda beatae repudiandae sequi? Doloribus molestias odit in ullam sed blanditiis facere praesentium consequuntur officia pariatur placeat possimus dignissimos perferendis architecto ipsum porro minima, itaque omnis facilis nam quis nemo. Itaque corrupti natus modi cum in numquam officia saepe!</p>
-            <a href="#" class="btn">View More</a>
+            <a href="#view" class="btn">View More</a>
         </div>
     </section>
 
     <section class="container">
         <h3>upcoming sessions</h3>
         <div class="session-one">
-            <h5>session 1</h5>
             <table>
+                <th>date</th>
+                <th>time</th>
+                <th>topic</th>
+                <th>center name</th>
+                <th></th>
+
+                <tr>
+                <td>2022-05-06</td>
+                <td>08.00</td>
+                <td>Introduction to python</td>
+                <td>Mahanama central college</td>
+                <td><a href="https://www.youtube.com/watch?v=I1Nb6k-TjF8" target="_blank">Attend</a></td>
+                </tr>
+
+                <tr>
+                <td>2022-05-06</td>
+                <td>08.00</td>
+                <td>Introduction to python and hello world</td>
+                <td>Mahanama central college</td>
+                <td><a href="https://www.youtube.com/watch?v=I1Nb6k-TjF8" target="_blank">Attend</a></td>
+                </tr>
+
+                <tr>
+                <td>2022-05-06</td>
+                <td>08.00</td>
+                <td>Introduction to python with arduino</td>
+                <td>Mahanama central college</td>
+                <td><a href="https://www.youtube.com/watch?v=I1Nb6k-TjF8" target="_blank">Attend</a></td>
+                </tr>
+
             </table>
         </div>
     </section>
+
+    <div class="view" id="view">
+        helo there
+    </div>
 
 
     <script src="script.js"></script>
