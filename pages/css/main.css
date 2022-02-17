@@ -4,7 +4,8 @@
     --maiin-color: rgb(9, 9, 65);
     --black: black;
     --bg: rgb(216, 211, 211);
-    --border: .5rem solid rgba(0, 0, 0, 0.3); 
+    --border: .5rem solid rgba(0, 0, 0, 0.3);
+    --font: 'Roboto Serif', sans-serif;
 }
 
 *{
@@ -31,7 +32,7 @@ html::-webkit-scrollbar{
 }
 
 html::-webkit-scrollbar-track{
-    background: transparent;
+    background: transparent;        
 }
 
 html::-webkit-scrollbar-thumb{
@@ -39,8 +40,8 @@ html::-webkit-scrollbar-thumb{
     border-radius: 5rem;
 }
 
-body{
-    background: var(--bg);
+section {
+    padding: 5vw;
 }
 
 .header{
@@ -64,7 +65,9 @@ body{
     justify-content: center;
 }
 .header .logo-text{
+    color: var(--maiin-color);
     font-size: 3rem;
+    font-weight: bold;
 }
 
 
@@ -77,4 +80,75 @@ body{
     margin: 0.1rem;
     font-size: 1.6rem;
     padding-right: 40px;
+}
+
+.banner {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-image: url('../images/bg.jpg');
+    background-size: cover;
+    padding: 0;
+}
+
+.banner .content {
+    background:linear-gradient(rgb(255, 255, 255), rgba(255, 255, 255, 0.5));
+    max-width: 50%;
+    text-align: center;
+    padding: 50vh 5rem;
+}
+
+.banner .content h3{
+    opacity: 1.0;
+    font-size: 6rem;
+}
+
+.banner .content p{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.5rem;
+    font-weight: lighter;
+    padding: 2rem;
+    padding-left: 0;
+}
+
+.banner .content .btn {
+    font-size: 1.5rem;
+    color: #000;
+    background-color: none;
+    border: 1px solid #000  ;
+    padding: 1rem;
+}
+
+.banner .content .btn:hover {
+    color: #fff;
+    background-color: #000;
+    
+}
+    
+.container h3 {
+    font-size: 4rem;
+    text-transform: capitalize;
+    padding: 2rem 0;
+    padding-bottom: 4rem;
+}
+
+.container .session-one {
+    padding:  1rem;
+}
+
+.container .session-one:hover {
+    padding:  1rem;
+    background:linear-gradient(rgb(255, 255, 255, 1), rgba(255, 0, 255, 0.3));
+    
+}
+
+.container .session-one h5 {
+    font-size: 4rem;
+}
+
+.container .session-one table td{
+    font-family: var(--font);
+    text-transform: capitalize;
+    font-size: 2rem;
+    padding: 2rem 2rem;
 }

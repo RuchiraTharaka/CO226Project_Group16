@@ -1,59 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nena Sala</title>
-    <link rel="stylesheet" href="./css/main.css">
-</head>
-<body>
-    <div class="header">
-        <div class="logo">
-            <div class="logo-img">
-                <a href="home.php"><img src="images/logo.png" alt=""></a>
-            </div>
-            <div class="logo-text">
-                <a href="home.php">NENA SALA</a>
-            </div>
+<?php include('partials/menu.php'); ?>
+
+<section class="banner">
+        <div class="content">
+            <h3>NENA SALA TUTORING PROJECT</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In facilis voluptatibus, assumenda beatae repudiandae sequi? Doloribus molestias odit in ullam sed blanditiis facere praesentium consequuntur officia pariatur placeat possimus dignissimos perferendis architecto ipsum porro minima, itaque omnis facilis nam quis nemo. Itaque corrupti natus modi cum in numquam officia saepe!</p>
+            <a href="#" class="btn">View More</a>
         </div>
+    </section>
 
-        <div class="navbar">
-            <?php
-                $AccMod = "STD";
-                $profile   = "profile.php";
-                $content  = "content.php";
-                $center  = "center.php";
-                $req  = "req.php";
-                $session  = "session.php";
-                $main = "../index.php";
-
-
-                if ( $AccMod == "ADM")
-                {
-                    echo "<a href=" . $profile .">profile</a>
-                    <a href=" . $content .">contents</a>
-                    <a href=" . $center .">center</a>
-                    <a href=" . $req .">requests</a>
-                    <a href=" . $session .">Sessios</a>
-                    <a href=" . $main .">logout</a>";
-                }
-                else if ($AccMod == "UGS")
-                {
-                    echo "<a href=" . $profile .">profile</a>
-                    <a href=" . $content .">contents</a>
-                    <a href=" . $main .">logout</a>";
-                }
-                else if ($AccMod == "STD")
-                {
-                    echo "<a href=" . $profile .">profile</a>
-                    <a href=" . $content .">contents</a>
-                    <a href=" . $main .">logout</a>";
-              }
-            ?>
+    <section class="container">
+        <h3>upcoming sessions...</h3>
+        <div class="session-one">
+            <h5>session 1</h5>
+            <table>
+                <tr>
+                    <td>date:</td>
+                    <td>12-12-2022</td>
+                </tr>
+                <tr>
+                    <td>time:</td>
+                    <td>12:30:00</td>
+                </tr>
+                <tr>
+                    <td>topic:</td>
+                    <td>introduction to arduino</td>
+                </tr>
+                <tr>
+                    <td>center name:</td>
+                    <td>mawanella central college</td>
+                </tr>
+            </table>
         </div>
-    </div>
-    <!-- Headee sections ends -->
-    <script src="./js/script.js"></script>
-</body>
-</html>
+    </section>
+
+<?php include('partials/footer.php'); ?>

@@ -27,7 +27,7 @@
             <a href="#Contact us">Contact us</a>
         </div>
     </div>
-    <!-- Headee sections ends -->
+    <!-- Header sections ends -->
 
     <section class="banner">
         <div class="content">

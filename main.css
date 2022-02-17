@@ -40,12 +40,8 @@ html::-webkit-scrollbar-thumb{
     border-radius: 5rem;
 }
 
-/* body{
-    background: var(--bg);
-} */
-
 section {
-    padding: 5vw
+    padding: 5vw;
 }
 
 .header{
@@ -87,7 +83,7 @@ section {
 }
 
 .banner {
-    max-height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     background-image: url('images/bg.jpg');
@@ -96,7 +92,7 @@ section {
 }
 
 .banner .content {
-    background:linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5));
+    background:linear-gradient(rgb(255, 255, 255), rgba(255, 255, 255, 0.5));
     max-width: 50%;
     text-align: center;
     padding: 50vh 5rem;
@@ -123,17 +119,27 @@ section {
     padding: 1rem;
 }
 
-
+.banner .content .btn:hover {
+    color: #fff;
+    background-color: #000;
+    
+}
+    
 .container h3 {
     font-size: 4rem;
     text-transform: capitalize;
     padding: 2rem 0;
+    padding-bottom: 4rem;
 }
 
 .container .session-one {
-    border: 2px solid #000;
     padding:  1rem;
-    background:linear-gradient(rgb(248, 212, 212), rgba(235, 94, 94, 0.5));
+}
+
+.container .session-one:hover {
+    padding:  1rem;
+    background:linear-gradient(rgb(255, 255, 255, 1), rgba(255, 0, 255, 0.3));
+    
 }
 
 .container .session-one h5 {
