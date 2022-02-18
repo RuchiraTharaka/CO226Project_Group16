@@ -35,7 +35,7 @@
             <div class="banner">
                 <h3>nena sala tutoring project</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In facilis voluptatibus, assumenda beatae repudiandae sequi? Doloribus molestias odit in ullam sed blanditiis facere praesentium consequuntur officia pariatur placeat possimus dignissimos perferendis architecto ipsum porro minima, itaque omnis facilis nam quis nemo. Itaque corrupti natus modi cum in numquam officia saepe!</p>
-                <a href="#view" class="btn">View More</a>
+                <a href="#about" class="btn">View More</a>
             </div>
             
             <section class="container">
@@ -87,6 +87,13 @@
                 </div>
 
                 <div class="space"></div>
+
+                <div class="vision">
+                    <h3>our vision</h3>
+                </div>
+
+                <div class="space"></div>
+
                 <div class="about section" id="about">
                     <h3>About us</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa magni beatae autem unde voluptas debitis distinctio nemo quae laudantium mollitia sequi, architecto recusandae tenetur totam facere commodi tempore ea eligendi libero! Consectetur accusantium tempore inventore totam obcaecati minus consequuntur, ratione necessitatibus quidem deserunt aliquid amet quas, fuga nihil asperiores, praesentium iste quaerat! Quasi esse recusandae dolorum sint, reiciendis eos praesentium.

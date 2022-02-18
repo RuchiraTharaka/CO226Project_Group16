@@ -3,7 +3,7 @@
 :root{
     --maiin-color: rgb(9, 9, 65);
     --black: black;
-    --bg: rgb(236, 236, 236);
+    --bg: rgb(197, 197, 197);
     --border: .5rem solid rgb(0, 0, 0);
     --font: 'Roboto Serif', sans-serif;
 }
@@ -100,16 +100,16 @@ section {
     min-height: 100vh;
     max-height: 100vh;
     align-items: center;
+    padding: 0;
     background-image: url('../images/bg.jpg');
     background-size: cover;
-    padding: 0;
     background-position: center;
     background-attachment: fixed;
 }
 
 .gradient {
-    background:linear-gradient(rgba(46, 46, 83, 0.9), rgba(255, 255, 255, 0.6));
-    background-attachment: fixed;
+    background:linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+    url('../images/bg.jpg') center/cover fixed no-repeat;
 }
 
 .banner {
@@ -131,10 +131,7 @@ section {
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
     font-weight: lighter;
-    padding-top: 2rem;
-    padding-left: 40rem;
-    padding-right: 40rem;
-    padding-bottom: 4rem;
+    padding: 2rem 40rem 4rem 40rem;
 }
 
 .banner .btn {
@@ -152,12 +149,13 @@ section {
 }
 
 .section {
-    background: var(--bg);
+    /* background: var(--bg); */
     padding:  5rem;
     align-items: center;
 }
 
 .container {
+    background: var(--bg);
     align-items: center;
     text-align: center;
 }
@@ -167,6 +165,7 @@ section {
     text-transform: uppercase;
     text-align: center;
     padding: 2rem 0 3rem 0;
+    text-decoration: underline;
 
 }
 
@@ -230,7 +229,7 @@ tr:nth-child(even) {
 
 .container .space {
     min-width: 100vw;
-    min-height: 20vh;
+    min-height: 60vh;
 }
 
 .container .about p{
