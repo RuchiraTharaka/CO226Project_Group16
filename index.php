@@ -39,40 +39,47 @@
 
     <section class="container">
         <h3>upcoming sessions</h3>
-        <div class="session-one">
-            <table>
-                <th>date</th>
-                <th>time</th>
-                <th>topic</th>
-                <th>center name</th>
-                <th></th>
 
-                <tr>
-                <td>2022-05-06</td>
-                <td>08.00</td>
-                <td>Introduction to python</td>
-                <td>Mahanama central college</td>
-                <td><a href="https://www.youtube.com/watch?v=I1Nb6k-TjF8" target="_blank">Attend</a></td>
-                </tr>
+        <?php
 
-                <tr>
-                <td>2022-05-06</td>
-                <td>08.00</td>
-                <td>Introduction to python and hello world</td>
-                <td>Mahanama central college</td>
-                <td><a href="https://www.youtube.com/watch?v=I1Nb6k-TjF8" target="_blank">Attend</a></td>
-                </tr>
+        $dbhost = "localhost:3306";
+        $dbuser = "root";
+        $dbpass = "";
+        $db = "Group16Project";
 
-                <tr>
-                <td>2022-05-06</td>
-                <td>08.00</td>
-                <td>Introduction to python with arduino</td>
-                <td>Mahanama central college</td>
-                <td><a href="https://www.youtube.com/watch?v=I1Nb6k-TjF8" target="_blank">Attend</a></td>
-                </tr>
+        // Create the sql connection
+        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
 
-            </table>
-        </div>
+        if (!$conn)
+        {
+            die("Unabale to connect");
+        }
+
+        $sqlresult = "SELECT * FROM view_session_main_home";
+
+        //  get the result from the query
+        $query = mysqli_query($conn, $sqlresult);
+
+        if (mysqli_num_rows($query) > 0)
+        {
+            echo "<div class=session-one>
+                <table>
+                    <th>date</th>
+                    <th>time</th>
+                    <th>topic</th>
+                    <th>center name</th>";
+                while($row = mysqli_fetch_array($query))
+                {
+                    echo "<tr>
+                    <td>" .$row[0] ."</td>
+                    <td>" .$row[1] ."</td>
+                    <td>" .$row[2] ."</td>
+                    <td>" .$row[3] ."</td>
+                    </tr>";
+                }
+            echo "</table></div>";
+        }
+        ?>
     </section>
 
     <div class="view" id="view">

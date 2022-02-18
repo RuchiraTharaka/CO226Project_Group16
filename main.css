@@ -92,7 +92,7 @@ section {
 }
 
 .banner .content {
-    background:linear-gradient(rgb(255, 255, 255), rgba(255, 255, 255, 0.5));
+    /* background:linear-gradient(rgb(9, 9, 65), rgba(255, 255, 255, 0.5)); */
     max-width: 40%;
     text-align: center;
     padding: 50vh 5rem;
@@ -166,7 +166,7 @@ section {
 
 .container .session-one table td{
     font-family: var(--font);
-    text-transform: capitalize;
+    text-transform: lowercase;
     font-size: 1.7rem;
     padding: 2rem 2rem;
     text-align: center;
