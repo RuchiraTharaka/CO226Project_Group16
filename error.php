@@ -31,64 +31,11 @@
 
     <section class="banner">
         <div class="content">
-            <h3>nena sala tutoring project</h3>
+            <h3>404  error</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In facilis voluptatibus, assumenda beatae repudiandae sequi? Doloribus molestias odit in ullam sed blanditiis facere praesentium consequuntur officia pariatur placeat possimus dignissimos perferendis architecto ipsum porro minima, itaque omnis facilis nam quis nemo. Itaque corrupti natus modi cum in numquam officia saepe!</p>
-            <a href="#view" class="btn">View More</a>
+            <a href="https://en.wikipedia.org/wiki/HTTP_404" target="_blank" class="btn">View More</a>
         </div>
     </section>
-
-    <section class="container">
-        <h3>upcoming sessions</h3>
-
-        <?php
-
-        $dbhost = "localhost:3306";
-        $dbuser = "root";
-        $dbpass = "";
-        $db = "Group16Project";
-
-        // Create the sql connection
-        $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
-
-        if (!$conn)
-        {
-            header("Location: ./error.php");
-            exit();
-        }
-
-        $sqlresult = "SELECT * FROM view_session_main_home";
-
-        //  get the result from the query
-        $query = mysqli_query($conn, $sqlresult);
-
-        if (mysqli_num_rows($query) > 0)
-        {
-            echo "<div class=session-one>
-                <table id=\"m\">
-                    <th>date</th>
-                    <th>time</th>
-                    <th>topic</th>
-                    <th>center name</th>";
-                while($row = mysqli_fetch_array($query))
-                {
-                    echo "<tr>
-                    <td>" .$row[0] ."</td>
-                    <td>" .$row[1] ."</td>
-                    <td>" .$row[2] ."</td>
-                    <td>" .$row[3] ."</td>
-                    </tr>";
-                }
-            echo "</table></div>";
-        }
-
-        mysqli_close($conn);
-        ?>
-    </section>
-
-    <div class="view" id="view">
-        helo there
-    </div>
-
 
     <script src="script.js"></script>
 </body>
