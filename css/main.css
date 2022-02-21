@@ -57,8 +57,20 @@ html::-webkit-scrollbar-thumb{
 }
 
 section {
-    padding: 5vw;
+    padding: 5vw 5vw  0 5vw;
 }
+
+button {
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border-radius: 0.3rem;
+}
+
+button:hover {
+    cursor: pointer;
+    background: rgb(175, 167, 167);
+}
+
 
 .header{
     background: rgb(202, 197, 197);
@@ -71,7 +83,6 @@ section {
     left: 0;
     right: 0;
     z-index: 1000;
-    
 }
 
 .header .logo{
@@ -92,13 +103,14 @@ section {
 }
 
 .header .navbar a{
+    color: var(--maiin-color);
     margin: 0.1rem;
     font-size: 1.6rem;
     padding-right: 40px;
 }
 .body {
-    min-height: 100vh;
-    max-height: 100vh;
+    min-height: 100%;
+    max-height: 100%;
     align-items: center;
     padding: 0;
     background-image: url('../images/bg.jpg');
@@ -149,8 +161,7 @@ section {
 }
 
 .section {
-    /* background: var(--bg); */
-    padding:  5rem;
+    padding:  6rem;
     align-items: center;
 }
 
@@ -176,6 +187,16 @@ section {
     padding: 1rem 0 2rem 0;
 }
 
+.container p{
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.5rem;
+    font-weight: lighter;
+    padding-top: 0rem;
+    padding-left: 20rem;    
+    padding-right: 20rem;
+    padding-bottom: 4rem;
+}
+
 .container .sessions table {
     /* margin-left: auto;
     margin-right: auto;
@@ -191,7 +212,7 @@ section {
     font-family: var(--font);
     font-weight: 600;
     font-size: 2rem;
-    padding: 1rem 14rem;
+    padding: 1rem 13rem;
     background: rgb(82, 81, 81);
     color: #fff;
 }
@@ -228,18 +249,8 @@ tr:nth-child(even) {
 }
 
 .container .space {
-    min-width: 100vw;
+    /* min-width: 100vw; */
     min-height: 60vh;
-}
-
-.container .about p{
-    font-family: "Times New Roman", Times, serif;
-    font-size: 1.5rem;
-    font-weight: lighter;
-    padding-top: 0rem;
-    padding-left: 20rem;
-    padding-right: 20rem;
-    padding-bottom: 4rem;
 }
 
 .container .about .statistics .row {
@@ -263,7 +274,6 @@ tr:nth-child(even) {
     margin-right: auto;
 }
 
-
 .container .about .statistics .row .col-2 {
     margin-left: auto;
     margin-right: auto;
@@ -278,5 +288,130 @@ tr:nth-child(even) {
     margin-left: 18rem;
     margin-right: 18rem;
     min-height: 10rem;
-    background: var(--bg);
 }
+
+.form { 
+    background: var(--maiin-color);
+    border-radius: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+.lbl {
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 1rem;
+}
+
+.inp {
+    height: 3rem;
+    width: 380px;
+    font-size: 1.2rem;
+}
+
+table {
+    margin: auto;
+}
+
+.contact-form .form table td {
+    padding: 1rem;
+    background: var(--maiin-color);
+    text-align: left;
+}
+
+.info {
+    min-width: 100px;
+    min-height: 10px;
+    background: var(--maiin-color);
+}
+
+.contact-form   .form .btn {
+    text-align: center;
+}
+
+#email {
+    text-transform: lowercase;
+}
+
+.contact-img {
+    max-height: 4rem;
+}
+
+
+/* start login page css here  */
+
+.login {
+    padding-top: 0;
+    padding-bottom: 25.5vh;
+}
+
+.login .login-form {
+    margin-left: 18rem;
+    margin-right: 18rem;
+    min-height: 10rem;
+}
+
+.login .login-form .form table td {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    background: var(--maiin-color);
+}
+
+.login .login-form .form .inp {
+    text-align: center;
+}
+
+.login .login-form .form .msg {
+    color: #fff;
+    font-size: 1rem;
+    padding-top: 3.5rem;
+    padding-bottom: 0.2rem;
+    text-transform: none    ;
+}
+
+.login .login-form .form .reg-link {
+    color: rgb(233, 238, 157);
+    font-size: 1.1rem;
+    text-decoration: underline;
+    padding-top: 0rem;
+    padding-bottom: 3.5rem;
+}
+
+.registration {
+    padding-top: 0;
+    padding-bottom: 25.5vh;
+}
+
+.registration .registration-form {
+    margin-left: 18rem;
+    margin-right: 18rem;
+    min-height: 10rem;
+}
+
+.registration .registration-form .form table td {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    background: var(--maiin-color);
+}
+
+/* .registration .registration-form .form .inp {
+    text-align: c;
+} */
+
+.registration .registration-form .form .msg {
+    color: #fff;
+    font-size: 1rem;
+    padding-top: 3.5rem;
+    padding-bottom: 0.2rem;
+    text-transform: none    ;
+}
+
+.registration .registration-form .form .reg-link {
+    color: rgb(233, 238, 157);
+    font-size: 1.1rem;
+    text-decoration: underline;
+    padding-top: 0rem;
+    padding-bottom: 3.5rem;
+}
+
+/* ends registration page css here  */
