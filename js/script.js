@@ -1,1 +1,0 @@
-var x = document.getElementById("m").rows.length;

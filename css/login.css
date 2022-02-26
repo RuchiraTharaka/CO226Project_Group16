@@ -1,0 +1,40 @@
+.login {
+    padding-top: 0;
+}
+
+.login .login-form {
+    margin-left: 18rem;
+    margin-right: 18rem;
+    min-height: 10rem;
+}
+
+.login .login-form .form table td {
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+    background: var(--maiin-color);
+}
+
+.login .login-form .form .inp {
+    text-align: center;
+}
+
+.login .login-form .form .btn input {
+    padding: 1rem 2rem;
+    border-radius: 1.8rem;
+}
+
+.login .login-form .form .msg {
+    color: #fff;
+    font-size: 1rem;
+    padding-top: 3.5rem;
+    padding-bottom: 0.2rem;
+    text-transform: none    ;
+}
+
+.login .login-form .form .reg-link {
+    color: rgb(233, 238, 157);
+    font-size: 1.1rem;
+    text-decoration: underline;
+    padding-top: 0rem;
+    padding-bottom: 3.5rem;
+}

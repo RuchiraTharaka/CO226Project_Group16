@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nena Sala</title>
     <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/registration.css">
+    <link rel="stylesheet" href="./css/login.css">
 </head>
 <body>
     <!-- Header sections starts -->

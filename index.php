@@ -52,6 +52,10 @@
                                 }
                         echo "</table>";
                     }
+                    else
+                    {
+                        echo "no result to show";
+                    }
                             
                     mysqli_close($conn);
                     ?>
@@ -139,4 +143,5 @@
     <!-- Body Sections ends  -->
 
     <?php include("./partials/footer.php"); ?>
+    <script src="./js/script.js"></script>
 
