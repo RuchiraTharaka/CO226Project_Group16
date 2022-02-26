@@ -22,7 +22,6 @@
         </div>
 
         <div class="navbar">
-            <a href="./pages/home.php">Home</a>
             <a href="./login.php">Login</a>
             <a href="./register.php">Register</a>
             <a href="./index.php#about">About</a>

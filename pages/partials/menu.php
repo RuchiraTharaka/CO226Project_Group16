@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,38 +22,19 @@
         </div>
 
         <div class="navbar">
+            <a href=profile.php>profile</a>
+            <a href=content.php>contents</a>
             <?php
-                $AccMod = "ADM";
-                $profile   = "profile.php";
-                $content  = "content.php";
-                $center  = "center.php";
-                $req  = "req.php";
-                $session  = "session.php";
-                $main = "../index.php";
-
+                $AccMod = $_SESSION["module"];
 
                 if ( $AccMod == "ADM")
                 {
-                    echo "<a href=" . $profile .">profile</a>
-                    <a href=" . $content .">contents</a>
-                    <a href=" . $center .">center</a>
-                    <a href=" . $req .">requests</a>
-                    <a href=" . $session .">Sessios</a>
-                    <a href=" . $main .">logout</a>";
+                    echo "<a href=center.php>center</a>
+                    <a href=req.php>requests</a>
+                    <a href=session.php>Sessios</a>";
                 }
-                else if ($AccMod == "UGS")
-                {
-                    echo "<a href=" . $profile .">profile</a>
-                    <a href=" . $content .">contents</a>
-                    <a href=" . $main .">logout</a>";
-                }
-                else if ($AccMod == "STD")
-                {
-                    echo "<a href=" . $profile .">profile</a>
-                    <a href=" . $content .">contents</a>
-                    <a href=" . $main .">logout</a>";
-              }
             ?>
+            <a href=logout.php>logout</a>
         </div>
     </div>
     <!-- Headee sections ends -->
