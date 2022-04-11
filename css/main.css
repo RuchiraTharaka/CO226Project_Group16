@@ -311,6 +311,8 @@ tr:nth-child(even) {
     height: 3rem;
     width: 380px;
     font-size: 1.3rem;
+    text-transform: none;
+    border-radius: .3rem;
 }
 
 table {
@@ -333,16 +335,15 @@ table {
     text-align: center;
 }
 
-.simple {
-    text-transform: lowercase;
-}
-
 .invalid {
-    color: red;
+    color: rgb(255, 0, 0);
+    padding: 5px;
+    text-transform: none;
 }
 
 .contact-img {
     max-height: 4rem;
 }
+
 
 

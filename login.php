@@ -38,7 +38,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate credentials
     if(empty($email_err) && empty($password_err)){
         // Prepare a select statement
-        $sql = "SELECT EMAIL,USER_MODUlE, PASSWORD FROM USER WHERE EMAIL = ?";
+        $sql = "SELECT EMAIL, USERID, USER_MODUlE, PASSWORD FROM USER WHERE EMAIL = ?";
         
         if($stmt = mysqli_prepare($link, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -55,22 +55,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 // Check if email exists, if yes then verify password
                 if(mysqli_stmt_num_rows($stmt) == 1){                    
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $email, $module, $hashed_password);
-                    if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($password, $hashed_password)){
-                            // Password is correct, so start a new session
-                            session_start();
-                            
-                            // Store data in session variables
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["email"] = $email;
-                            $_SESSION["module"] = $module;
-                            
-                            // Redirect user to welcome page
-                            header("location: ./pages/home.php");
-                        } else{
-                            // Password is not valid, display a generic error message
-                            $login_err = "Invalid email or password.";
+                    mysqli_stmt_bind_result($stmt, $email, $userid, $module, $hashed_password);
+                    if(mysqli_stmt_fetch($stmt))
+                    {
+                        if(!is_null($userid))
+                        {
+                            if(password_verify($password, $hashed_password)){
+                                // Password is correct, so start a new session
+                                session_start();
+                                
+                                // Store data in session variables
+                                $_SESSION["loggedin"] = true;
+                                $_SESSION["email"] = $email;
+                                $_SESSION["userid"] = $userid;
+                                $_SESSION["module"] = $module;
+                                
+                                // Redirect user to welcome page
+                                header("location: ./pages/home.php");
+                            } else{
+                                // Password is not valid, display a generic error message
+                                $login_err = "Invalid email or password.";
+                            }
+                        }
+                        else{
+                            $login_err = "Your account not verified yet. please contact an admin.";
                         }
                     }
                 } else{

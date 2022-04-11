@@ -5,15 +5,18 @@ include("./partials/menu.php");
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$email = $password = $confirm_password = "";
+$email = $password = $confirm_password = $module = $fname = $lname = $tel = "";
+$schoolid = $bod = $addr = $grade = "";
+$regno = $ugDepartment = "";
+$enrollno = $admDepartment = "";
 $email_err = $password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
+
     // Validate email
     if(empty(trim($_POST["email"]))){
-        $email_err = "Please enter a email.";
+        $email_err = "please enter a email.";
     // } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
     //     $email_err = "Invalid email";
     } else{
@@ -48,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Validate password
     if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";     
+        $password_err = "please enter a password.";     
     } elseif(strlen(trim($_POST["password"])) < 6){
         $password_err = "Password must have atleast 6 characters.";
     } else{
@@ -57,39 +60,110 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
     // Validate confirm password
     if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";
+        $confirm_password_err = "please confirm password.";
     } else {
         $confirm_password = trim($_POST["confirm_password"]);
         if(empty($password_err) && ($password != $confirm_password)){
             $confirm_password_err = "Password did not match.";
         }
     }
+
     
     // Check input errors before inserting in database
     if(empty($email_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO USER (EMAIL, PASSWORD) VALUES (?, ?)";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_email, $param_password);
-            
-            // Set parameters
-            $param_email = $email;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
+        // $sql = "INSERT INTO USER (EMAIL, FIRSTNAME, LASTNAME, USER_MODUlE, TEL_NUMBER, PASSWORD) VALUES (?, ?, ?, ?, ?, ?)";
+        if (trim($_POST["module"]) == "STD")
+        {
+            $sql = "CALL Register_STD(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
+                mysqli_stmt_bind_param($stmt, "sssisissi", $param_email, $fname, $lname, $tel, $param_password, $schoolid, $bod, $addr, $grade);
+                
+                // Set parameters
+                $param_email = $email;
+                $fname = trim($_POST["fname"]);
+                $lname = trim($_POST["lname"]);
+                $tel = trim($_POST["tel"]);
+                $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+                $schoolid = trim($_POST["school"]);
+                $bod = trim($_POST["bod"]);
+                $addr = trim($_POST["addr"]);
+                $grade = trim($_POST["grade"]);
+                
+                // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    // Redirect to login page
+                    header("location: login.php");
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+    
+                // Close statement
+                mysqli_stmt_close($stmt);
             }
-
-            // Close statement
-            mysqli_stmt_close($stmt);
         }
+        elseif (trim($_POST["module"]) == "UGS")
+        {
+            $sql = "CALL Register_UGS(?, ?, ?, ?, ?, ?, ?)";
+            if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
+                mysqli_stmt_bind_param($stmt, "sssisss", $param_email, $fname, $lname, $tel, $param_password, $regno, $ugDepartment);
+                
+                // Set parameters
+                $param_email = $email;
+                $fname = trim($_POST["fname"]);
+                $lname = trim($_POST["lname"]);
+                $tel = trim($_POST["tel"]);
+                $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+                $regno = trim($_POST["regno"]);
+                $ugDepartment = trim($_POST["ugDepartment"]);
+                
+                // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    // Redirect to login page
+                    header("location: login.php");
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+    
+                // Close statement
+                mysqli_stmt_close($stmt);
+            }
+        }
+        elseif (trim($_POST["module"]) == "ADM")
+        {
+            $sql = "CALL Register_ADM(?, ?, ?, ?, ?, ?, ?)";
+            if($stmt = mysqli_prepare($link, $sql)){
+                // Bind variables to the prepared statement as parameters
+                // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
+                mysqli_stmt_bind_param($stmt, "sssisss", $param_email, $fname, $lname, $tel, $param_password, $enrollno, $admDepartment);
+                
+                // Set parameters
+                $param_email = $email;
+                $fname = trim($_POST["fname"]);
+                $lname = trim($_POST["lname"]);
+                $tel = trim($_POST["tel"]);
+                $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+                $enrollno = trim($_POST["enrollno"]);
+                $admDepartment = trim($_POST["admDepartment"]);
+                
+                // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    // Redirect to login page
+                    header("location: login.php");
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+    
+                // Close statement
+                mysqli_stmt_close($stmt);
+            }
+        }
+         
     }
     
     // Close connection
@@ -132,19 +206,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     <table>
                                         <tr>
                                             <td class="lbl" ><label for="fname">first name</label></td>
-                                            <td><input type="text" name="fname" id="fname" class="inp" placeholder=" first name"></td>
+                                            <td><input type="text" name="fname" id="fname" class="inp" placeholder=" First Name"></td>
                                         </tr>
                                         <tr>
                                             <td class="lbl" ><label for="lname">last name</label></td>
-                                            <td><input type="text" name="lname" id="lname" class="inp" placeholder=" last name"></td>
+                                            <td><input type="text" name="lname" id="lname" class="inp" placeholder=" Last Name"></td>
                                         </tr>
                                         <tr>
                                             <td class="lbl" ><label for="email">email</label></td>
-                                            <td><input type="email" name="email" id="email" class="inp simple" placeholder=" example@gmail.com" value="<?php echo $email; ?>"></td>
+                                            <td><input type="email" name="email" id="email" class="inp" placeholder=" example@gmail.com" value="<?php echo $email; ?>"></td>
                                         </tr>
                                         <tr>
-                                            <td class="lbl" ><label for="telno">TEL-number</label></td>
-                                            <td><input type="text" name="telno" id="telno" class="inp" placeholder=" 0713000000"></td>
+                                            <td class="lbl" ><label for="tel">TEL-number</label></td>
+                                            <td><input type="text" name="tel" id="tel" class="inp" placeholder=" 0713000000"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -152,10 +226,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <div class="std" id="std">
                                     <table>
                                         <tr>
-                                        <td class="lbl"><label for="schools">Select school</label></td>
+                                        <td class="lbl"><label for="school">school</label></td>
                                             <td>
-                                                <select class="inp" name="schools" id="schools">
-                                                    <option value="none">school</option>
+                                                <select class="inp" name="school" id="school">
+                                                    <option value="none" disabled selected>select school</option>
                                                     <?php
                                                         $dbhost = "localhost:3306";
                                                         $dbuser = "root";
@@ -198,7 +272,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                         </tr>
                                         <tr>
                                             <td class="lbl" ><label for="addr">address</label></td>
-                                            <td><input type="text" name="addr" id="addr" class="inp" placeholder=" no 71, peradeniya, kandy"></td>
+                                            <td><input type="text" name="addr" id="addr" class="inp" placeholder=" No 71, Peradeniya, Kandy"></td>
                                         </tr>
                                         <tr>
                                             <td class="lbl" ><label for="grade">grade</label></td>
@@ -210,12 +284,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <div class="ugs" id="ugs">
                                     <table>
                                         <tr>
-                                                <td class="lbl" ><label for="reg-no">reg no</label></td>
-                                                <td><input type="text" name="reg-no" id="reg-no" class="inp simple" placeholder=" E/18/xxx"></td>
+                                                <td class="lbl" ><label for="regno">reg no</label></td>
+                                                <td><input type="text" name="regno" id="regno" class="inp" placeholder=" E/18/xxx"></td>
                                             </tr>
                                             <tr>
-                                                <td class="lbl" ><label for="ug-department">department</label></td>
-                                                <td><input type="text" name="ug-department" id="ug-department" class="inp" placeholder=" department of compute enginnering"></td>
+                                                <td class="lbl" ><label for="ugDepartment">department</label></td>
+                                                <td><input type="text" name="ugDepartment" id="ugDepartment" class="inp" placeholder=" Department of Computer Enginnering"></td>
                                             </tr>
                                     </table>
                                 </div>
@@ -223,12 +297,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                 <div class="adm" id="adm">
                                     <table>
                                     <tr>
-                                                <td class="lbl" ><label for="enroll-no">enrollment no</label></td>
-                                                <td><input type="text" name="enroll-no" id="enroll-no" class="inp simple" placeholder=" eng/xx/xxx"></td>
+                                                <td class="lbl" ><label for="enrollno">enrollment no</label></td>
+                                                <td><input type="text" name="enrollno" id="enrollno" class="inp" placeholder=" Eng/xx/xxx"></td>
                                             </tr>
                                             <tr>
-                                            <td class="lbl" ><label for="adm-department">department</label></td>
-                                                <td><input type="text" name="adm-department" id="adm-department" class="inp" placeholder=" department of compute enginnering"></td>
+                                            <td class="lbl" ><label for="admDepartment">department</label></td>
+                                                <td><input type="text" name="admDepartment" id="admDepartment" class="inp" placeholder=" Department of Computer Enginnering"></td>
                                             </tr>
                                     </table>
                                 </div>
@@ -240,7 +314,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                         </tr>
                                         <tr>
                                             <td for="confirm_password" class="lbl" >re-password</td>
-                                            <td><input type="password" class="inp" id="confirm_password" name="confirm_password" placeholder=" re-enter password here" value="<?php echo $confirm_password; ?>"></td>
+                                            <td><input type="password" class="inp" id="confirm_password" name="confirm_password" placeholder=" Re-enter password here" value="<?php echo $confirm_password; ?>"></td>
                                         </tr>
                                     </table>
                                 </div>

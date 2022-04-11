@@ -15,9 +15,18 @@
     background: var(--maiin-color);
 }
 
+.registration .registration-form .form .err table td {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 .registration .registration-form .form .basic-form .btn input {
     padding: 1rem 2rem;
     border-radius: 2rem;
+}
+
+.registration .registration-form .form .basic-form .btn input:hover {
+    cursor: pointer;
 }
 
 .registration .registration-form .form .msg {

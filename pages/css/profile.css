@@ -1,0 +1,50 @@
+.profile {
+    display: flex;
+    min-height: 90vh;
+}
+
+.profile-pic {
+    padding-top: 10rem;
+    min-width: 500px;
+    max-width: 500px;
+}
+
+.pp {
+    max-height: 25rem;
+    border-radius: 25rem;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+.details {
+    padding-top: 7rem;
+    min-width: 700px;
+}
+
+.plbl {
+    color: rgb(0, 0, 0);
+    font-size: 1.6rem;
+    text-transform: none;
+    padding: 3rem 2rem 2rem 0.5rem;
+    min-width: 140px;
+    min-height: 40px;
+    text-align: left;
+}
+
+.pinp {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding-left: 0.5rem;
+    border-radius: 3px;
+    font-size: 1.4rem;
+    min-height: 3rem;
+    align-items: flex-start;
+    width: 380px;
+    background: rgba(166, 162, 162, 0.6);
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+h4 {
+    padding-top: 1.5rem;
+    font-size: 2rem;
+    text-transform: none;
+    font-weight: 500;
+}

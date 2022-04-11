@@ -23,12 +23,16 @@
     border-radius: 1.8rem;
 }
 
+.login .login-form .form .btn input:hover {
+    cursor: pointer;
+}
+
 .login .login-form .form .msg {
     color: #fff;
     font-size: 1rem;
     padding-top: 3.5rem;
     padding-bottom: 0.2rem;
-    text-transform: none    ;
+    text-transform: none;
 }
 
 .login .login-form .form .reg-link {
