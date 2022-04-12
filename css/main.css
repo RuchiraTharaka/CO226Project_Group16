@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,wght@0,100;0,400;0,500;1,400&display=swap');
 
-:root{
+:root {
     --maiin-color: rgb(9, 9, 65);
     --black: black;
     --bg: rgb(197, 197, 197);
@@ -8,7 +8,7 @@
     --font: 'Roboto Serif', sans-serif;
 }
 
-*{
+* {
     font-family: var(--font);
     margin: 0;
     padding: 0;
@@ -23,41 +23,41 @@
 a:link {
     color: rgb(255, 0, 0);
 }
-  
+
 a:visited {
     color: rgb(4, 43, 4);
 }
-  
+
 a:hover {
     color: rgb(26, 112, 94);
 }
-  
+
 a:active {
     color: rgb(115, 115, 179);
 }
 
-html{
+html {
     font-size: 62.5%;
     overflow-x: hidden;
     scroll-padding-top: 9rem;
     scroll-behavior: smooth;
 }
 
-html::-webkit-scrollbar{
+html::-webkit-scrollbar {
     width: .8rem;
 }
 
-html::-webkit-scrollbar-track{
-    background: transparent;        
+html::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-html::-webkit-scrollbar-thumb{
+html::-webkit-scrollbar-thumb {
     background: #fff;
     border-radius: 5rem;
 }
 
 section {
-    padding: 5vw; 
+    padding: 0 5vw 0 5vw;
 }
 
 button {
@@ -72,7 +72,7 @@ button:hover {
 }
 
 
-.header{
+.header {
     background: rgb(202, 197, 197);
     display: flex;
     align-items: center;
@@ -83,31 +83,33 @@ button:hover {
     left: 0;
     right: 0;
     z-index: 1000;
+    max-height: 13rem;
 }
 
-.header .logo{
+.header .logo {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.header .logo-text{
+
+.header .logo-text {
     color: var(--maiin-color);
     font-size: 3rem;
     font-weight: bold;
 }
 
 
-.header .logo-img img
-{
+.header .logo-img img {
     height: 12rem;
 }
 
-.header .navbar a{
+.header .navbar a {
     color: var(--maiin-color);
     margin: 0.1rem;
     font-size: 1.6rem;
     padding-right: 40px;
 }
+
 .body {
     min-height: 100%;
     max-height: 100%;
@@ -120,9 +122,10 @@ button:hover {
 }
 
 .gradient {
-    background:linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
-    url('../images/bg.jpg') center/cover fixed no-repeat;
+    background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
+        url('../images/bg.jpg') center/cover fixed no-repeat;
     min-height: 80vh;
+    padding-top: 13rem;
 }
 
 .banner {
@@ -131,16 +134,16 @@ button:hover {
     padding: 35vh 10rem;
 }
 
-.banner h3{
+.banner h3 {
     font-size: 7rem;
     text-transform: uppercase;
 }
 
-.banner h3:hover{
+.banner h3:hover {
     font-size: 8rem;
 }
 
-.banner p{
+.banner p {
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
     font-weight: lighter;
@@ -151,18 +154,18 @@ button:hover {
     font-size: 1.5rem;
     color: #000;
     background-color: none;
-    border: 1px solid #000  ;
+    border: 1px solid #000;
     padding: 1rem;
 }
 
 .banner .btn:hover {
     color: #fff;
     background-color: #000;
-    
+
 }
 
 .section {
-    padding:  6rem;
+    padding: 6rem;
     align-items: center;
 }
 
@@ -170,11 +173,13 @@ button:hover {
     background: var(--bg);
     align-items: center;
     text-align: center;
-    
+    padding-top: 4rem;
+    min-height: calc(100vh - 13rem);
+
 }
 
 .container h3 {
-    font-size: 4rem;    
+    font-size: 4rem;
     text-transform: uppercase;
     text-align: center;
     padding: 2rem 0 3rem 0;
@@ -189,12 +194,12 @@ button:hover {
     padding: 1rem 0 2rem 0;
 }
 
-.container p{
+.container p {
     font-family: "Times New Roman", Times, serif;
     font-size: 1.5rem;
     font-weight: lighter;
     padding-top: 0rem;
-    padding-left: 20rem;    
+    padding-left: 20rem;
     padding-right: 20rem;
     padding-bottom: 4rem;
 }
@@ -210,7 +215,7 @@ button:hover {
 
 }
 
-.container .sessions table th{
+.container .sessions table th {
     font-family: var(--font);
     font-weight: 600;
     font-size: 2rem;
@@ -220,7 +225,7 @@ button:hover {
 }
 
 
-.container .sessions table td{
+.container .sessions table td {
     font-family: var(--font);
     font-size: 1.7rem;
     padding: 2rem 2rem;
@@ -231,28 +236,28 @@ tr:nth-child(even) {
     background-color: #e2dfdfcb;
 }
 
-.container .sessions table tr:hover{
+.container .sessions table tr:hover {
     background-color: rgb(82, 81, 81);
     color: #fff;
 }
 
-.container .sessions table td a{
+.container .sessions table td a {
     font-size: 1.5rem;
     color: #000;
     background-color: rgb(224, 151, 151);
-    border: 1px solid #000  ;
+    border: 1px solid #000;
     padding: 0.7rem;
     border-radius: 6px;
 }
 
-.container .sessions table td a:hover{
+.container .sessions table td a:hover {
     background-color: rgb(82, 2, 2);
     color: rgb(255, 255, 255);
 }
 
 .container .space {
-    /* min-width: 100vw; */
     min-height: 60vh;
+    padding: 4rem;
 }
 
 .container .about .statistics .row {
@@ -292,7 +297,7 @@ tr:nth-child(even) {
     min-height: 10rem;
 }
 
-.form { 
+.form {
     background: var(--maiin-color);
     border-radius: 1rem;
     padding-top: 2rem;
@@ -331,7 +336,7 @@ table {
     background: var(--maiin-color);
 }
 
-.contact-form   .form .btn {
+.contact-form .form .btn {
     text-align: center;
 }
 
@@ -344,6 +349,3 @@ table {
 .contact-img {
     max-height: 4rem;
 }
-
-
-

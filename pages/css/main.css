@@ -57,7 +57,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 section {
-    padding: 5vw;
+    padding: 0 5vw 0 5vw;
 }
 
 button {
@@ -79,6 +79,7 @@ button:hover {
     justify-content: space-between;
     padding: 10px 1.5rem;
     position: fixed;
+    max-height: 13rem;
     top: 0;
     left: 0;
     right: 0;
@@ -124,6 +125,7 @@ button:hover {
     background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
         url('../images/bg.jpg') center/cover fixed no-repeat;
     min-height: 100vh;
+    padding-top: 13rem;
 }
 
 .banner {
@@ -171,7 +173,8 @@ button:hover {
     background: var(--bg);
     align-items: center;
     text-align: center;
-
+    padding-top: 4rem;
+    min-height: calc(100vh - 13rem);
 }
 
 .container h3 {

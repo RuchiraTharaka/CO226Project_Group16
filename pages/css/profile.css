@@ -1,12 +1,16 @@
 .profile {
     display: flex;
-    min-height: 90vh;
+    max-height: 700px;
+}
+
+#edit {
+    display: none;
 }
 
 .profile-pic {
-    padding-top: 10rem;
+    padding-top: 8rem;
     min-width: 500px;
-    max-width: 500px;
+    max-height: 500px;
 }
 
 .pp {
@@ -16,17 +20,29 @@
 }
 
 .details {
-    padding-top: 7rem;
+    padding-top: 4rem;
     min-width: 700px;
+    max-height: 700px;
 }
 
 .plbl {
     color: rgb(0, 0, 0);
     font-size: 1.6rem;
     text-transform: none;
-    padding: 3rem 2rem 2rem 0.5rem;
+    padding: 2rem 2rem 2rem 0.5rem;
     min-width: 140px;
-    min-height: 40px;
+    min-height: 3rem;
+    text-align: left;
+}
+
+.pinplbl {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: rgb(0, 0, 0);
+    font-size: 1.6rem;
+    text-transform: none;
+    padding: 2rem 2rem 2rem 0.5rem;
+    width: 380px;
+    min-height: 3rem;
     text-align: left;
 }
 
@@ -47,4 +63,27 @@ h4 {
     font-size: 2rem;
     text-transform: none;
     font-weight: 500;
+    text-decoration: underline;
+}
+
+.details .btn {
+    color: white;
+    background-color: black;
+    padding: 1rem 2rem;
+    margin-left: 3rem;
+    border-radius: 1.8rem;
+}
+
+.details .btn:hover {
+    color: azure;
+    background-color: black;
+    cursor: pointer;
+}
+
+.details .err {
+    padding: 0.5rem 0 2rem 5px;
+    font-size: 1.6rem;
+    font-style: italic;
+    color: rgb(168, 17, 17);
+    text-align: left;
 }
