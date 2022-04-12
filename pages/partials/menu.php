@@ -10,6 +10,7 @@ session_start();
     <title>Nena Sala</title>
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/profile.css">
+    <link rel="stylesheet" href="./css/req.css">
 </head>
 <body>
     <div class="header">
@@ -31,7 +32,7 @@ session_start();
                 if ( $AccMod == "ADM")
                 {
                     echo "<a href=center.php>center</a>
-                    <a href=req.php>requests</a>
+                    <a href=adm_req.php>requests</a>
                     <a href=session.php>Sessios</a>";
                 }
             ?>

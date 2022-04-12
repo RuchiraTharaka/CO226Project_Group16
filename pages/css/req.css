@@ -1,0 +1,67 @@
+.req .menu {
+    display: flex;
+    justify-content: center;
+}
+
+.req .menu a {
+    padding: 0 2rem 2rem 2rem;
+    font-size: 1.7rem;
+    color: rgb(8, 8, 60);
+    text-decoration: underline;
+}
+
+.req table {
+    margin: 3rem auto 4rem auto;
+    border-collapse: collapse;
+    text-transform: capitalize;
+}
+
+.req table th {
+    font-family: var(--font);
+    font-weight: 400;
+    font-size: 1.4rem;
+    padding: 1rem 6rem;
+    background: rgb(82, 81, 81);
+    color: #fff;
+}
+
+.req #view tr:hover {
+    cursor: pointer;
+}
+
+.req #view td {
+    font-family: var(--font);
+    font-size: 1.5rem;
+    text-transform: none;
+    padding: 1.5rem 5rem;
+    text-align: center;
+    border-bottom: var(--border);
+}
+
+.req table td {
+    text-align: left;
+}
+
+
+.req .btn {
+    color: white;
+    background-color: black;
+    padding: 1rem 2rem;
+    margin-left: 5rem;
+    margin-top: 1.5rem;
+    border-radius: 1.8rem;
+}
+
+.req .btn:hover {
+    color: azure;
+    background-color: black;
+    cursor: pointer;
+}
+
+#userid {
+    width: 200px;
+}
+
+#email {
+    width: 200px;
+}
