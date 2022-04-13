@@ -183,7 +183,7 @@
                         <!-- ends profile view section -->
                         
                         <!-- start edit form section -->
-                        <form id="edit" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                        <form id="profile-edit" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                             <table>
                                 <tr>
                                     <td class="plbl">USER ID</td>
@@ -240,7 +240,7 @@
                             <table>
                                 <tr>
                                     <td><input class="btn" type="submit" value="save">
-                                    <button onclick="hide_edit()" class="btn">Cancel</button></td>
+                                    <button type="button" onclick="hide_edit()" class="btn">Cancel</button></td>
                                 </tr>
                             </table>
                         </form>

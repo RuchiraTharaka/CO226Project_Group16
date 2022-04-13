@@ -149,7 +149,7 @@
                                     </tr>
                                     <tr>
                                         <td><input type="text" class="inp" placeholder="Christina magie"></td>
-                                        <td><input type="email" name="" id="email" class="inp" placeholder="example@gmail.com"></td>
+                                        <td><input type="email" name="" id="mail" class="inp" placeholder="example@gmail.com"></td>
                                     </tr>
                                     <tr>
                                         <td class="lbl" >telephone</td>

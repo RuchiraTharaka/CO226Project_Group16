@@ -16,6 +16,7 @@
         header("Location: ./error.php");
         exit();
     }
+
     // Processing form data when form is submitted
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(strlen(trim($_POST["userid"])) == 6){
@@ -81,6 +82,8 @@
                                             </tr>";
                                         }
                                 echo "</table>";
+
+                                echo "<p class=\"err\">" .$error ."</p>";
                                 
                                 echo "<form id=\"setID\" action=\"";
                                 echo htmlspecialchars($_SERVER["PHP_SELF"]);
@@ -89,17 +92,19 @@
                                 "<table>
                                 <tr>
                                 <td class=\"plbl\">Email</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"email\" id=\"email\" value=\"\"></td>
+                                <td><input type=\"text\" class=\"pinp\" name=\"email\" id=\"email\" value=\"\" readonly=\"readonly\" placeholder=\"select row\"></td>
                                 </tr>
                                 <tr>
                                 <td class=\"plbl\">User ID</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"userid\" id=\"userid\" value=\"\"></td>
+                                <td><input type=\"text\" class=\"pinp\" name=\"userid\" id=\"userid\" value=\"\" placeholder=\"ADMxxx\"></td>
                                 </tr>
                                 <tr>
                                 <td></td>
                                 <td><input class=\"btn\" type=\"submit\" value=\"Accept\">
+                                <input class=\"btn\" type=\"submit\" value=\"Reject\"></td>
                                 </tr>
-                                </table></form>";
+                                </table>
+                                </form>";
                             }
                             else
                             {

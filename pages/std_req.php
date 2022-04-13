@@ -5,6 +5,8 @@
     $dbuser = "root";
     $dbpass = "";
     $db = "Group16Project";
+    $email = $userid = "";
+    $error = "";
 
     // Create the sql connection
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
@@ -13,7 +15,37 @@
     {
         header("Location: ./error.php");
         exit();
-    }  
+    }
+
+    // Processing form data when form is submitted
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if(strlen(trim($_POST["userid"])) == 6){
+            $sql = "CALL Accept_Request(?, ?)";
+            if($stmt = mysqli_prepare($conn, $sql)){
+                // Bind variables to the prepared statement as parameters
+                // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
+                mysqli_stmt_bind_param($stmt, "ss", $email, $userid);
+                
+                // Set parameters
+                $email = trim($_POST["email"]);
+                $userid = trim($_POST["userid"]);
+                
+                // Attempt to execute the prepared statement
+                if(mysqli_stmt_execute($stmt)){
+                    header($_SERVER["PHP_SELF"]);
+                }
+                else{
+                    echo "Oops! Something went wrong. Please try again later.";
+                }
+    
+                // Close statement
+                mysqli_stmt_close($stmt);
+            }
+        }
+        else {
+            $error = "Unable accept account. Invalid UserID!";
+        }
+    }
 ?>
 
     <!-- Body Sections begin  -->
@@ -50,6 +82,8 @@
                                             </tr>";
                                         }
                                 echo "</table>";
+
+                                echo "<p class=\"err\">" .$error ."</p>";
                                 
                                 echo "<form id=\"setID\" action=\"";
                                 echo htmlspecialchars($_SERVER["PHP_SELF"]);
@@ -58,15 +92,16 @@
                                 "<table>
                                 <tr>
                                 <td class=\"plbl\">Email</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"email\" id=\"email\" value=\"\"></td>
+                                <td><input type=\"text\" class=\"pinp\" name=\"email\" id=\"email\" value=\"\" readonly=\"readonly\" placeholder=\"select row\"></td>
                                 </tr>
                                 <tr>
                                 <td class=\"plbl\">User ID</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"userid\" id=\"userid\" value=\"\"></td>
+                                <td><input type=\"text\" class=\"pinp\" name=\"userid\" id=\"userid\" value=\"\" placeholder=\"STDxxx\"></td>
                                 </tr>
                                 <tr>
                                 <td></td>
                                 <td><input class=\"btn\" type=\"submit\" value=\"Accept\">
+                                <input class=\"btn\" type=\"submit\" value=\"Reject\"></td>
                                 </tr>
                                 </table></form>";
                             }

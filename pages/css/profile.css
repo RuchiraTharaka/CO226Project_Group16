@@ -3,7 +3,7 @@
     max-height: 700px;
 }
 
-#edit {
+#profile-edit {
     display: none;
 }
 
@@ -30,7 +30,6 @@
     font-size: 1.6rem;
     text-transform: none;
     padding: 2rem 2rem 2rem 0;
-    /* min-width: 140px; */
     min-height: 3rem;
     text-align: left;
 }
@@ -51,6 +50,7 @@
     padding-left: 0.5rem;
     border-radius: 3px;
     font-size: 1.4rem;
+    text-transform: none;
     min-height: 3rem;
     align-items: flex-start;
     width: 380px;

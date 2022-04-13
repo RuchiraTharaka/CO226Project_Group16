@@ -1,22 +1,22 @@
-.req .menu {
+.centers .menu {
     display: flex;
     justify-content: center;
 }
 
-.req .menu a {
+.centers .menu a {
     padding: 0 2rem 2rem 2rem;
     font-size: 1.7rem;
     color: rgb(8, 8, 60);
     text-decoration: underline;
 }
 
-.req table {
-    margin: 3rem auto 4rem auto;
+.centers table {
+    margin: 0 auto 4rem auto;
     border-collapse: collapse;
     text-transform: capitalize;
 }
 
-.req table th {
+.centers table th {
     font-family: var(--font);
     font-weight: 400;
     font-size: 1.4rem;
@@ -25,49 +25,54 @@
     color: #fff;
 }
 
-.req #view tr:hover {
+.centers #view tr:hover {
     cursor: pointer;
 }
 
-.req #view td {
+.centers #view td {
     font-family: var(--font);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     text-transform: none;
     padding: 1.5rem 5rem;
     text-align: center;
     border-bottom: var(--border);
 }
 
-.req table td {
+.centers table td {
     text-align: left;
 }
 
 
-.req .btn {
+.centers .btn {
     color: white;
     background-color: black;
     padding: 1rem 2rem;
-    margin: 1.5rem 1rem auto 1rem;
+    margin-top: 1.2rem;
     border-radius: 1.8rem;
 }
 
-.req .btn:hover {
+.centers .btn:hover {
     color: azure;
     background-color: black;
     cursor: pointer;
 }
 
-.req .err {
+.centers .err {
     padding: 0;
     font-size: 1.6rem;
     font-style: italic;
     color: rgb(168, 17, 17);
 }
 
-#userid {
-    width: 230px;
+.centers .hide {
+    display: none;
 }
 
-#email {
-    width: 230px;
+.centers #eqcell {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.centers .pinp {
+    width: 420px;
 }
