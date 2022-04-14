@@ -1,4 +1,4 @@
-var table = document.getElementsByTagName("table")[0];
+var table = document.getElementsByTagName("table")[1];
 var tbody = table.getElementsByTagName("tbody")[0];
 tbody.onclick = function (e) {
     e = e || window.event;
@@ -14,4 +14,4 @@ tbody.onclick = function (e) {
             }
         }
     }
-}; 
+};

@@ -182,7 +182,14 @@ button:hover {
     text-align: center;
     padding: 2rem 0 3rem 0;
     text-decoration: underline;
+}
 
+.container h4 {
+    padding-top: 1.5rem;
+    font-size: 2rem;
+    text-transform: none;
+    font-weight: 500;
+    text-decoration: underline;
 }
 
 .container h5 {
@@ -324,7 +331,7 @@ tr:nth-child(odd) {
 }
 
 table {
-    margin: auto;
+    margin: 0 auto 3rem auto;
 }
 
 .contact-form .form table td {
@@ -353,4 +360,107 @@ table {
 
 .contact-img {
     max-height: 4rem;
+}
+
+table {
+    border-collapse: collapse;
+    text-transform: capitalize;
+}
+
+.head table {
+    width: 1500px;
+    margin: 0 auto 0 auto;
+}
+
+.head table th {
+    font-family: var(--font);
+    font-weight: 400;
+    font-size: 1.4rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background: rgb(82, 81, 81);
+    color: #fff;
+}
+
+.rslt-view {
+    max-height: 310px;
+    overflow-y: auto;
+
+
+}
+
+.rslt-view {
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.rslt-view::-webkit-scrollbar {
+    display: none;
+}
+
+.rslt-view table {
+    width: 1500px;
+    margin: 0 auto 4rem auto;
+}
+
+.rslt-view table td {
+    font-family: var(--font);
+    font-size: 1.2rem;
+    text-transform: none;
+    text-align: center;
+    padding: 1.5rem 0.5rem;
+    max-width: 400px;
+    border-bottom: var(--border);
+}
+
+.rslt-view table tr:hover {
+    cursor: pointer;
+}
+
+.rslt-view .col-id {
+    width: 200px;
+}
+
+.edit-form {
+    padding-top: 1rem;
+}
+
+.edit-form .btn {
+    color: white;
+    background-color: black;
+    padding: 1rem 2rem;
+    margin-top: 1.2rem;
+    border-radius: 1.8rem;
+}
+
+.edit-form .btn:hover {
+    color: azure;
+    background-color: black;
+    cursor: pointer;
+}
+
+.edit-form .err {
+    padding: 0;
+    font-size: 1.6rem;
+    font-style: italic;
+    color: rgb(168, 17, 17);
+}
+
+.edit-form .hide {
+    display: none;
+}
+
+.edit-form #eqcell {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.edit-form .pinp {
+    width: 500px;
+}
+
+.edit-form textarea {
+    margin-bottom: 0.5rem;
 }

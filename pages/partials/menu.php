@@ -12,6 +12,7 @@ session_start();
     <link rel="stylesheet" href="./css/profile.css">
     <link rel="stylesheet" href="./css/req.css">
     <link rel="stylesheet" href="./css/center.css">
+    <link rel="stylesheet" href="./css/content.css">
 </head>
 <body>
     <div class="header">

@@ -151,81 +151,82 @@
     <div class="body">
         <section class="gradient">
             <section class="container">
-                <div class="centers">   
-                    <div class="adm-req">
-                        <?php
-                            $sql = "SELECT * FROM center";
+                <div class="center">   
+                    <?php
+                        $sql = "SELECT * FROM center";
 
-                            $query = mysqli_query($conn, $sql);  
-                            if (mysqli_num_rows($query) > 0)
-                            {
-                                echo "<table id=\"view\">
-                                        <th>Center ID</th>
-                                        <th>Center Name</th>
-                                        <th>Address</th>
-                                        <th>Tel Number</th>
-                                        <th>Representative</th>";
-                                        while($row = mysqli_fetch_array($query))
-                                        {
-                                            echo "<tr>
-                                            <td>" .$row[0] ."</td>
-                                            <td>" .$row[1] ."</td>
-                                            <td>" .$row[2] ."</td>
-                                            <td>" .$row[3] ."</td>
-                                            <td>" .$row[4] ."</td>
-                                            </tr>";
-                                        }
-                                echo "</table>";
+                        $query = mysqli_query($conn, $sql);  
+                        if (mysqli_num_rows($query) > 0)
+                        {
+                            echo "<div  class=\"head\"><table>
+                                    <th width= 10%>Center ID</th>
+                                    <th width= 20%>Center Name</th>
+                                    <th width= 30%>Address</th>
+                                    <th width= 20%>Tel Number</th>
+                                    <th width= 20%>Representative</th></table></div>";
+                            echo "<div class=\"rslt-view\"><table>";
+                                    while($row = mysqli_fetch_array($query))
+                                    {
+                                        echo "<tr>
+                                        <td width= 10%>" .$row[0] ."</td>
+                                        <td width= 20%>" .$row[1] ."</td>
+                                        <td width= 30%>" .$row[2] ."</td>
+                                        <td width= 20%>" .$row[3] ."</td>
+                                        <td width= 20%>" .$row[4] ."</td>
+                                        </tr>";
+                                    }
+                            echo "</table></div>";
 
-                                echo "<p id=\"error\" class=\"err\">" .$error ."</p>";
-                                
-                                echo "<form id=\"center-edit\" action=\"";
-                                echo htmlspecialchars($_SERVER["PHP_SELF"]);
-                                echo "\" method=\"POST\">";
-                                echo
-                                "<table>
-                                <tr>
-                                <td class=\"plbl\">CenterID</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"ceid\" id=\"ceid\" value=\"\" placeholder=\"\" readOnly=\"true\"></td>
-                                </tr>
-                                <tr>
-                                <td class=\"plbl\">Center Name</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"cename\" id=\"cename\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
-                                </tr>
-                                <tr>
-                                <td class=\"plbl\">Address</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"ceaddr\" id=\"ceaddr\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
-                                </tr>
-                                <tr>
-                                <td class=\"plbl\">Tel Number</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"cetel\" id=\"cetel\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
-                                </tr>
-                                </tr>
-                                <tr>
-                                <td class=\"plbl\">Representative</td>
-                                <td><input type=\"text\" class=\"pinp\" name=\"cerep\" id=\"cerep\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
-                                </tr>
-                                <tr>
-                                <td></td>
-                                <td id=\"eqcell\">
-                                <button type=\"button\" onclick=\"edit()\" id=\"ce-edit\" class=\"btn\">edit</button>
-                                <button type=\"button\" onclick=\"add_new()\" id=\"ce-add-new\" class=\"btn\">Add New</button>
-                                <button type=\"button\" onclick=\"dlt()\" id=\"ce-dlt\" class=\"btn\">Delete</button>
-                                <input id=\"ce-save\" name=\"ce-save\" class=\"btn hide\" type=\"submit\" value=\"Save\">
-                                <input id=\"ce-add\" name=\"ce-add\" class=\"btn hide\" type=\"submit\" value=\"Add\">
-                                <input id=\"ce-cfmdlt\" name=\"ce-cfmdlt\" class=\"btn hide\" type=\"submit\" value=\"Confirm Delete\">
-                                <button type=\"button\" onclick=\"cancel()\" id=\"ce-cancel\" class=\"btn hide\">Cancel</button></td>
-                                </tr>
-                                </table>
-                                </form>";
-                            }
-                            else
-                            {
-                                echo "no result to show";
-                            }
-                        ?>
-                    </div>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste provident consectetur fugit aut dignissimos dolorum non pariatur asperiores dicta reiciendis.</p>
+
+                            
+                            echo "<div class=\"edit-form\"><form id=\"center-edit\" action=\"";
+                            echo htmlspecialchars($_SERVER["PHP_SELF"]);
+                            echo "\" method=\"POST\">";
+                            echo "<p id=\"error\" class=\"err\">" .$error ."</p>";
+                            echo
+                            "<table>
+                            <tr>
+                            <td class=\"plbl\">Center ID</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"ceid\" id=\"ceid\" value=\"\" placeholder=\"\" readOnly=\"true\"></td>
+                            </tr>
+                            <tr>
+                            <td class=\"plbl\">Center Name</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"cename\" id=\"cename\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                            </tr>
+                            <tr>
+                            <td class=\"plbl\">Address</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"ceaddr\" id=\"ceaddr\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                            </tr>
+                            <tr>
+                            <td class=\"plbl\">Tel Number</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"cetel\" id=\"cetel\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                            </tr>
+                            </tr>
+                            <tr>
+                            <td class=\"plbl\">Representative</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"cerep\" id=\"cerep\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                            </tr>
+                            <tr>
+                            <td></td>
+                            <td id=\"eqcell\">
+                            <button type=\"button\" onclick=\"edit()\" id=\"ce-edit\" class=\"btn\">edit</button>
+                            <button type=\"button\" onclick=\"add_new()\" id=\"ce-add-new\" class=\"btn\">Add New</button>
+                            <button type=\"button\" onclick=\"dlt()\" id=\"ce-dlt\" class=\"btn\">Delete</button>
+                            <input id=\"ce-save\" name=\"ce-save\" class=\"btn hide\" type=\"submit\" value=\"Save\">
+                            <input id=\"ce-add\" name=\"ce-add\" class=\"btn hide\" type=\"submit\" value=\"Add\">
+                            <input id=\"ce-cfmdlt\" name=\"ce-cfmdlt\" class=\"btn hide\" type=\"submit\" value=\"Confirm Delete\">
+                            <button type=\"button\" onclick=\"cancel()\" id=\"ce-cancel\" class=\"btn hide\">Cancel</button></td>
+                            </tr>
+                            </table>
+                            </form>
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste provident consectetur fugit aut dignissimos dolorum non pariatur asperiores dicta reiciendis.</p>
+                            </div>";
+                        }
+                        else
+                        {
+                            echo "no result to show";
+                        }
+                    ?>
                 </div>
             </section>
         </section>

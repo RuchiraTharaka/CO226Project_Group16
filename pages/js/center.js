@@ -14,7 +14,7 @@ var error = document.getElementById("error");
 
 var setVal = true;
 
-var table = document.getElementsByTagName("table")[0];
+var table = document.getElementsByTagName("table")[1];
 var tbody = table.getElementsByTagName("tbody")[0];
 tbody.onclick = function (e) {
     var data = [];
@@ -66,6 +66,8 @@ function add_new() {
     ce_dlt.style.display = "none";
     ce_add.style.display = "inline";
     ce_cancel.style.display = "inline";
+    error.innerHTML = "";
+    error.style.display = "none";
 }
 
 function dlt() {
@@ -85,6 +87,7 @@ function dlt() {
 
 function cancel() {
     clearAll();
+    set_ReadOnly(1);
     ce_edit.style.display = "inline";
     ce_add_new.style.display = "inline";
     ce_dlt.style.display = "inline";

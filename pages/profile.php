@@ -121,7 +121,7 @@
                     <div class="details">
 
                         <!-- start profile view section -->
-                        <table id="view">
+                        <table id="pro-view">
                             <tr>
                                 <td class="plbl">USER ID</td>
                                 <td class="pinplbl"> <?php echo $_SESSION["userid"] ?></td>
@@ -183,7 +183,7 @@
                         <!-- ends profile view section -->
                         
                         <!-- start edit form section -->
-                        <form id="profile-edit" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                        <form id="pro-edit" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                             <table>
                                 <tr>
                                     <td class="plbl">USER ID</td>

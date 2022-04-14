@@ -65,29 +65,30 @@
                             $query = mysqli_query($conn, $sql);  
                             if (mysqli_num_rows($query) > 0)
                             {
-                                echo "<table id=\"view\">
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Department</th>
-                                        <th>Enrollment Number</th>";
+                                echo "<div  class=\"head\"><table>
+                                        <th width= 20%>First Name</th>
+                                        <th width= 20%>Last Name</th>
+                                        <th width= 20%>Email</th>
+                                        <th width= 30%>Department</th>
+                                        <th width= 10%>Enrollment Number</th></table></div>";
+                                echo "<div class=\"rslt-view\"><table>";
                                         while($row = mysqli_fetch_array($query))
                                         {
                                             echo "<tr>
-                                            <td>" .$row[0] ."</td>
-                                            <td>" .$row[1] ."</td>
-                                            <td>" .$row[2] ."</td>
-                                            <td>" .$row[3] ."</td>
-                                            <td>" .$row[4] ."</td>
+                                            <td width= 20%>" .$row[0] ."</td>
+                                            <td width= 20%>" .$row[1] ."</td>
+                                            <td width= 20%>" .$row[2] ."</td>
+                                            <td width= 30%>" .$row[3] ."</td>
+                                            <td width= 10%>" .$row[4] ."</td>
                                             </tr>";
                                         }
-                                echo "</table>";
+                                echo "</table></div>";
 
-                                echo "<p class=\"err\">" .$error ."</p>";
                                 
-                                echo "<form id=\"setID\" action=\"";
+                                echo "<div class=\"edit-form\"><form id=\"setID\" action=\"";
                                 echo htmlspecialchars($_SERVER["PHP_SELF"]);
                                 echo "\" method=\"POST\">";
+                                echo "<p class=\"err\">" .$error ."</p>";
                                 echo
                                 "<table>
                                 <tr>
@@ -100,11 +101,14 @@
                                 </tr>
                                 <tr>
                                 <td></td>
-                                <td><input class=\"btn\" type=\"submit\" value=\"Accept\">
+                                <td id=\"eqcell\">
+                                <input class=\"btn\" type=\"submit\" value=\"Accept\">
                                 <input class=\"btn\" type=\"submit\" value=\"Reject\"></td>
                                 </tr>
                                 </table>
-                                </form>";
+                                </form>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste provident consectetur fugit aut dignissimos dolorum non pariatur asperiores dicta reiciendis.</p>
+                                </div>";
                             }
                             else
                             {
@@ -112,7 +116,6 @@
                             }
                         ?>
                     </div>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste provident consectetur fugit aut dignissimos dolorum non pariatur asperiores dicta reiciendis.</p>
                 </div>
             </section>
         </section>
