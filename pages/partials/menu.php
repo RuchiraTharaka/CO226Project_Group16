@@ -33,8 +33,9 @@ session_start();
 
                 if ( $AccMod == "ADM")
                 {
-                    echo "<a href=center.php>center</a>
+                    echo "<a href=center.php>centers</a>
                     <a href=adm_req.php>requests</a>
+                    <a href=scl.php>schools</a>
                     <a href=session.php>Sessios</a>";
                 }
             ?>

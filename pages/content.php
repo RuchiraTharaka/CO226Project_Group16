@@ -135,68 +135,99 @@
                         $query = mysqli_query($conn, $sql);  
                         if (mysqli_num_rows($query) > 0)
                         {
-                            echo "<div class=\"head\"><table>
-                                <th width= 10%>Content ID</th>
-                                <th width= 20%>Content Topic</th>
-                                <th width= 20%>Description</th>
-                                <th width= 25%>Link1</th>
-                                <th width= 25%>Link2</th></table></div>";
-                            echo "<div class=\"rslt-view\"><table>";
-                                    while($row = mysqli_fetch_array($query))
-                                    {
-                                        echo "<tr>
-                                        <td width= 10%>" .$row[0] ."</td>
-                                        <td width= 20%>" .$row[1] ."</td>
-                                        <td width= 20%>" .$row[2] ."</td>
-                                        <td width= 25%>" .$row[3] ."</td>
-                                        <td width= 25%>" .$row[4] ."</td>
-                                        </tr>";
-                                    }
-                            echo "</table></div>";
+                            if ($_SESSION['module'] == "STD") {
+                                
+                                while($row = mysqli_fetch_array($query))
+                                {
+                                    echo 
+                                    "<div class=\"std-view\">
+                                    <h4>" .$row[1] ."</h4>
+                                    <table>
+                                    <tr>
+                                    <td width= 20%>Description</td>
+                                    <td class=\"pinplbl\">" .$row[2] ."</td>
+                                    </tr>
+                                    <tr>
+                                    <td>References</td>
+                                    <td><a class=\"pinplbl\" href=" .$row[3] ." target=\"_blank\">" .$row[3] ."</td>
+                                    </tr>
+                                    <tr>
+                                    <td></td>
+                                    <td><a class=\"pinplbl\" href=" .$row[4] ." target=\"_blank\">" .$row[4] ."</td>
+                                    </tr>
+                                    </table>
+                                    </div>";
+                                }
 
-                            echo "<div class=\"edit-form\"><form id=\"content-edit\" action=\"";
-                            echo htmlspecialchars($_SERVER["PHP_SELF"]);
-                            echo "\" method=\"POST\">";
+                                echo "<p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste provident consectetur fugit aut dignissimos dolorum non pariatur asperiores dicta reiciendis.</p>
+                                ";
+                            } 
+                            else {
+                                
+                                echo "<div class=\"head\"><table>
+                                    <th width= 10%>Content ID</th>
+                                    <th width= 20%>Content Topic</th>
+                                    <th width= 20%>Description</th>
+                                    <th width= 25%>Link1</th>
+                                    <th width= 25%>Link2</th></table></div>";
+                                echo "<div class=\"rslt-view\"><table>";
+                                        while($row = mysqli_fetch_array($query))
+                                        {
+                                            echo "<tr>
+                                            <td width= 10%>" .$row[0] ."</td>
+                                            <td width= 20%>" .$row[1] ."</td>
+                                            <td width= 20%>" .$row[2] ."</td>
+                                            <td width= 25%>" .$row[3] ."</td>
+                                            <td width= 25%>" .$row[4] ."</td>
+                                            </tr>";
+                                        }
+                                echo "</table></div>";
 
-                            echo "<p id=\"error\" class=\"err\">" .$error ."</p>";
-                            echo
-                            "<table>
-                            <tr>
-                            <td class=\"plbl\">Content ID</td>
-                            <td><input type=\"text\" class=\"pinp\" name=\"coid\" id=\"coid\" value=\"\" placeholder=\"\" readOnly=\"true\"></td>
-                            </tr>
-                            <tr>
-                            <td class=\"plbl\">Content Topic</td>
-                            <td><input type=\"text\" class=\"pinp\" name=\"cotopic\" id=\"cotopic\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
-                            </tr>
-                            <tr>
-                            <td class=\"plbl\">Description</td>
-                            <td><textarea name=\"codesc\" id=\"codesc\" form=\"content-edit\" class=\"pinp\"cols=\"60\" rows=\"4\" readonly=\"readonly\"></textarea></td>
-                            </tr>
-                            <tr>
-                            <td class=\"plbl\">Reference Links</td>
-                            <td><textarea name=\"colink1\" id=\"colink1\" form=\"content-edit\" class=\"pinp\"cols=\"60\" rows=\"2\" readonly=\"readonly\"></textarea></td>
-                            </tr>
-                            </tr>
-                            <tr>
-                            <td class=\"plbl\"></td>
-                            <td><textarea name=\"colink2\" id=\"colink2\" form=\"content-edit\" class=\"pinp\"cols=\"60\" rows=\"2\" readonly=\"readonly\"></textarea></td>
-                            </tr>
-                            <tr>
-                            <td></td>
-                            <td id=\"eqcell\">
-                            <button type=\"button\" onclick=\"edit()\" id=\"co-edit\" class=\"btn\">Edit</button>
-                            <button type=\"button\" onclick=\"add_new()\" id=\"co-add-new\" class=\"btn\">Add New</button>
-                            <button type=\"button\" onclick=\"dlt()\" id=\"co-dlt\" class=\"btn\">Delete</button>
-                            <input id=\"co-save\" name=\"co-save\" class=\"btn hide\" type=\"submit\" value=\"Save\">
-                            <input id=\"co-add\" name=\"co-add\" class=\"btn hide\" type=\"submit\" value=\"Add\">
-                            <input id=\"co-cfmdlt\" name=\"co-cfmdlt\" class=\"btn hide\" type=\"submit\" value=\"Confirm Delete\">
-                            <button type=\"button\" onclick=\"cancel()\" id=\"co-cancel\" class=\"btn hide\">Cancel</button></td>
-                            </tr>
-                            </table>
-                            </form>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste provident consectetur fugit aut dignissimos dolorum non pariatur asperiores dicta reiciendis.</p>
-                            </div>";
+                                echo "<div class=\"edit-form\"><form id=\"content-edit\" action=\"";
+                                echo htmlspecialchars($_SERVER["PHP_SELF"]);
+                                echo "\" method=\"POST\">";
+
+                                echo "<p id=\"error\" class=\"err\">" .$error ."</p>";
+
+                                echo
+                                "<table>
+                                <tr>
+                                <td class=\"plbl\">Content ID</td>
+                                <td><input type=\"text\" class=\"pinp\" name=\"coid\" id=\"coid\" value=\"\" placeholder=\"\" readOnly=\"true\"></td>
+                                </tr>
+                                <tr>
+                                <td class=\"plbl\">Content Topic</td>
+                                <td><input type=\"text\" class=\"pinp\" name=\"cotopic\" id=\"cotopic\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                                </tr>
+                                <tr>
+                                <td class=\"plbl\">Description</td>
+                                <td><textarea name=\"codesc\" id=\"codesc\" form=\"content-edit\" class=\"pinp\"cols=\"60\" rows=\"4\" readonly=\"readonly\"></textarea></td>
+                                </tr>
+                                <tr>
+                                <td class=\"plbl\">Reference Links</td>
+                                <td><textarea name=\"colink1\" id=\"colink1\" form=\"content-edit\" class=\"pinp\"cols=\"60\" rows=\"2\" readonly=\"readonly\"></textarea></td>
+                                </tr>
+                                </tr>
+                                <tr>
+                                <td class=\"plbl\"></td>
+                                <td><textarea name=\"colink2\" id=\"colink2\" form=\"content-edit\" class=\"pinp\"cols=\"60\" rows=\"2\" readonly=\"readonly\"></textarea></td>
+                                </tr>
+                                <tr>
+                                <td></td>
+                                <td id=\"eqcell\">
+                                <button type=\"button\" onclick=\"edit()\" id=\"co-edit\" class=\"btn\">Edit</button>
+                                <button type=\"button\" onclick=\"add_new()\" id=\"co-add-new\" class=\"btn\">Add New</button>
+                                <button type=\"button\" onclick=\"dlt()\" id=\"co-dlt\" class=\"btn\">Delete</button>
+                                <input id=\"co-save\" name=\"co-save\" class=\"btn hide\" type=\"submit\" value=\"Save\">
+                                <input id=\"co-add\" name=\"co-add\" class=\"btn hide\" type=\"submit\" value=\"Add\">
+                                <input id=\"co-cfmdlt\" name=\"co-cfmdlt\" class=\"btn hide\" type=\"submit\" value=\"Confirm Delete\">
+                                <button type=\"button\" onclick=\"cancel()\" id=\"co-cancel\" class=\"btn hide\">Cancel</button></td>
+                                </tr>
+                                </table>
+                                </form>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste provident consectetur fugit aut dignissimos dolorum non pariatur asperiores dicta reiciendis.</p>
+                                </div>";
+                            }
                         }
                         else
                         {

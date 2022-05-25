@@ -7,8 +7,7 @@
     $db = "Group16Project";
     $email = $userid = "";
     $error = "";
-    $ceid = $cename = $ceaddr = $cetel = $cerep = "";
-    $param_cerep = "";
+    $sclid = $sclname = $scltel = $scl_cename = "";
 
     // Create the sql connection
     $conn = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
@@ -21,19 +20,19 @@
 
     // Processing form data when form is submitted
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $ceid = trim($_POST["ceid"]);
+        $sclid = trim($_POST["sclid"]);
 
         if (isset($_POST['ce-cfmdlt'])) {
             // Prepare a select statement
-            $sql = "CALL Remove_center(?)";
+            $sql = "CALL Remove_school(?)";
 
             if($stmt = mysqli_prepare($conn, $sql)){
                 // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "i", $ceid);
+                mysqli_stmt_bind_param($stmt, "i", $sclid);
                 
                 // Attempt to execute the prepared statement
                 if(mysqli_stmt_execute($stmt)){
-                    header("Location: ./center.php");
+                    header("Location: ./scl.php");
                 }
                 else{
                     echo "Oops! Something went wrong. Please try again later.";
@@ -45,76 +44,42 @@
         } else if (isset($_POST['ce-save']) || isset($_POST['ce-add'])) {
             // delete button pressed
             // check whether Center name field is empty
-            if(empty(trim($_POST["cename"])))
+            if(empty(trim($_POST["sclname"])))
             {
-                $error = "Center Name cannot be empty";
+                $error = "School Name cannot be empty";
             } else {
-                $cename = trim($_POST["cename"]);
-            }
-    
-            // check whether Center address field is empty
-            if(empty(trim($_POST["ceaddr"])))
-            {
-                $error = "Center Address cannot be empty";
-            } else {
-                $ceaddr = trim($_POST["ceaddr"]);
+                $sclname = trim($_POST["sclname"]);
             }
     
             // // Check wheather center telephone number is empty and valid
-            if(empty(trim($_POST["cetel"]))) {
-                $error = "Fields cannot be empty";
-            } elseif(is_numeric(trim($_POST["cetel"])) && strlen(trim($_POST["cetel"])) == 9){
-                $cetel = trim($_POST["cetel"]);
+            if(empty(trim($_POST["scltel"]))) {
+                $error = "Tel Number cannot be empty";
+            } elseif(is_numeric(trim($_POST["scltel"])) && strlen(trim($_POST["scltel"])) == 9){
+                $scltel = trim($_POST["scltel"]);
             }
             else {
                 $error = "Invalid phone number";
             }
     
             // Check wheather the given representative email is valid
-            if(empty(trim($_POST["cerep"])))
+            if(empty(trim($_POST["scl-cename"])))
             {
-                $error = "Representative email cannot be empty";
+                $error = "Center Name cannot be empty";
             } else {
-                // Prepare a select statement
-                $sql = "SELECT EMAIL FROM USER WHERE EMAIL = ?";
-                
-                if($stmt = mysqli_prepare($conn, $sql)){
-                    // Bind variables to the prepared statement as parameters
-                    mysqli_stmt_bind_param($stmt, "s", $param_cerep);
-                    
-                    // Set parameters
-                    $param_cerep = trim($_POST["cerep"]);
-                    
-                    // Attempt to execute the prepared statement
-                    if(mysqli_stmt_execute($stmt)){
-                        /* store result */
-                        mysqli_stmt_store_result($stmt);
-                        
-                        if(mysqli_stmt_num_rows($stmt) == 1){
-                            $cerep = trim($_POST["cerep"]);
-                        } else{
-                            $error = "No Undergraduate with this email. Please check again.";
-                        }
-                    } else{
-                        $error =  "Oops! Something went wrong. Please try again later.";
-                    }
-    
-                    // Close statement
-                    mysqli_stmt_close($stmt);
-                }
+                $scl_cename = trim($_POST["scl-cename"]);
             }
 
             if ($error == ""){
                 if (isset($_POST['ce-save'])) {
-                    $sql = "CALL Update_center(?, ?, ?, ?, ?)";
+                    $sql = "CALL Update_school(?, ?, ?)";
                     if($stmt = mysqli_prepare($conn, $sql)){
                         // Bind variables to the prepared statement as parameters
                         // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
-                        mysqli_stmt_bind_param($stmt, "issss", $ceid, $cename, $ceaddr, $cetel, $cerep);
+                        mysqli_stmt_bind_param($stmt, "isi", $sclid, $sclname, $scltel);
                         
                         // Attempt to execute the prepared statement
                         if(mysqli_stmt_execute($stmt)){
-                            header("Location: ./center.php");
+                            header("Location: ./scl.php");
                         }
                         else{
                             echo "Oops! Something went wrong. Please try again later.";
@@ -124,15 +89,15 @@
                         mysqli_stmt_close($stmt);
                     }
                 } else if (isset($_POST['ce-add'])) {
-                    $sql = "CALL Create_center(?, ?, ?, ?)";
+                    $sql = "CALL Create_school(?, ?, ?)";
                     if($stmt = mysqli_prepare($conn, $sql)){
                         // Bind variables to the prepared statement as parameters
                         // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
-                        mysqli_stmt_bind_param($stmt, "ssss", $cename, $ceaddr, $cetel, $cerep);
+                        mysqli_stmt_bind_param($stmt, "sis", $sclname, $scltel, $scl_cename);
                         
                         // Attempt to execute the prepared statement
                         if(mysqli_stmt_execute($stmt)){
-                            header("Location: ./center.php");
+                            header("Location: ./scl.php");
                         }
                         else{
                             echo "Oops! Something went wrong. Please try again later.";
@@ -153,26 +118,24 @@
             <section class="container">
                 <div class="center">   
                     <?php
-                        $sql = "SELECT * FROM center ORDER BY CENTER_ID";
+                        $sql = "SELECT s.SCHOOL_ID, s.SCHOOL_NAME, s.TEL_NUMBER, c.CENTER_NAME FROM school s, center c WHERE s.CENTER_ID = c.CENTER_ID ORDER BY s.SCHOOL_ID";
 
                         $query = mysqli_query($conn, $sql);  
                         if (mysqli_num_rows($query) > 0)
                         {
                             echo "<div  class=\"head\"><table>
-                                    <th width= 10%>Center ID</th>
-                                    <th width= 20%>Center Name</th>
-                                    <th width= 30%>Address</th>
+                                    <th width= 10%>School ID</th>
+                                    <th width= 35%>School Name</th>
                                     <th width= 20%>Tel Number</th>
-                                    <th width= 20%>Representative</th></table></div>";
+                                    <th width= 35%>Center Name</th></table></div>";
                             echo "<div class=\"rslt-view\"><table>";
                                     while($row = mysqli_fetch_array($query))
                                     {
                                         echo "<tr>
                                         <td width= 10%>" .$row[0] ."</td>
-                                        <td width= 20%>" .$row[1] ."</td>
-                                        <td width= 30%>" .$row[2] ."</td>
-                                        <td width= 20%>" .$row[3] ."</td>
-                                        <td width= 20%>" .$row[4] ."</td>
+                                        <td width= 35%>" .$row[1] ."</td>
+                                        <td width= 20%>" .$row[2] ."</td>
+                                        <td width= 35%>" .$row[3] ."</td>
                                         </tr>";
                                     }
                             echo "</table></div>";
@@ -186,36 +149,32 @@
                             echo
                             "<table>
                             <tr>
-                            <td class=\"plbl\">Center ID</td>
-                            <td><input type=\"text\" class=\"pinp\" name=\"ceid\" id=\"ceid\" value=\"\" placeholder=\"\" readOnly=\"true\"></td>
+                            <td class=\"plbl\">School ID</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"sclid\" id=\"sclid\" value=\"\" placeholder=\"\" readOnly=\"true\"></td>
                             </tr>
                             <tr>
-                            <td class=\"plbl\">Center Name</td>
-                            <td><input type=\"text\" class=\"pinp\" name=\"cename\" id=\"cename\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
-                            </tr>
-                            <tr>
-                            <td class=\"plbl\">Address</td>
-                            <td><input type=\"text\" class=\"pinp\" name=\"ceaddr\" id=\"ceaddr\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                            <td class=\"plbl\">School Name</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"sclname\" id=\"sclname\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
                             </tr>
                             <tr>
                             <td class=\"plbl\">Tel Number</td>
-                            <td><input type=\"text\" class=\"pinp\" name=\"cetel\" id=\"cetel\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"scltel\" id=\"scltel\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
                             </tr>
                             </tr>
                             <tr>
-                            <td class=\"plbl\">Representative</td>
-                            <td><input type=\"text\" class=\"pinp\" name=\"cerep\" id=\"cerep\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
+                            <td class=\"plbl\">Center Name</td>
+                            <td><input type=\"text\" class=\"pinp\" name=\"scl-cename\" id=\"scl-cename\" value=\"\" placeholder=\"\" readonly=\"readonly\"></td>
                             </tr>
                             <tr>
                             <td></td>
                             <td id=\"eqcell\">
-                            <button type=\"button\" onclick=\"edit()\" id=\"ce-edit\" class=\"btn\">edit</button>
-                            <button type=\"button\" onclick=\"add_new()\" id=\"ce-add-new\" class=\"btn\">Add New</button>
-                            <button type=\"button\" onclick=\"dlt()\" id=\"ce-dlt\" class=\"btn\">Delete</button>
-                            <input id=\"ce-save\" name=\"ce-save\" class=\"btn hide\" type=\"submit\" value=\"Save\">
-                            <input id=\"ce-add\" name=\"ce-add\" class=\"btn hide\" type=\"submit\" value=\"Add\">
-                            <input id=\"ce-cfmdlt\" name=\"ce-cfmdlt\" class=\"btn hide\" type=\"submit\" value=\"Confirm Delete\">
-                            <button type=\"button\" onclick=\"cancel()\" id=\"ce-cancel\" class=\"btn hide\">Cancel</button></td>
+                            <button type=\"button\" onclick=\"edit()\" id=\"scl-edit\" class=\"btn\">edit</button>
+                            <button type=\"button\" onclick=\"add_new()\" id=\"scl-add-new\" class=\"btn\">Add New</button>
+                            <button type=\"button\" onclick=\"dlt()\" id=\"scl-dlt\" class=\"btn\">Delete</button>
+                            <input id=\"scl-save\" name=\"ce-save\" class=\"btn hide\" type=\"submit\" value=\"Save\">
+                            <input id=\"scl-add\" name=\"ce-add\" class=\"btn hide\" type=\"submit\" value=\"Add\">
+                            <input id=\"scl-cfmdlt\" name=\"ce-cfmdlt\" class=\"btn hide\" type=\"submit\" value=\"Confirm Delete\">
+                            <button type=\"button\" onclick=\"cancel()\" id=\"scl-cancel\" class=\"btn hide\">Cancel</button></td>
                             </tr>
                             </table>
                             </form>
@@ -233,7 +192,7 @@
     </div>
     <!-- Body Sections ends  -->
 
-    <script src="./js/center.js"></script>
+    <script src="./js/scl.js"></script>
 <?php
 mysqli_close($conn);
 include("./partials/footer.php"); 

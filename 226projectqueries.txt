@@ -1,0 +1,555 @@
+CREATE DATABASE Group16Project;
+
+
+USE Group16Project;
+
+
+CREATE TABLE USER
+(
+EMAIL VARCHAR(40) PRIMARY KEY,
+USERID CHAR(6),
+FIRSTNAME VARCHAR(30),
+LASTNAME VARCHAR(30),
+USER_MODUlE CHAR(3),
+TEL_NUMBER INT,
+PASSWORD VARCHAR(255)
+);
+
+
+CREATE TABLE ADMINISTRATOR
+(
+EMAIL VARCHAR(40) PRIMARY KEY,
+ENROLLMENT_NUMBER CHAR(10),
+DEPARTMENT VARCHAR(40)
+);
+
+
+CREATE TABLE UNIVERSITY_STUDENT
+(
+EMAIL VARCHAR(40) PRIMARY KEY,
+UNI_REG_NO CHAR(8),
+DEPARTMENT VARCHAR(40)
+);
+
+
+CREATE TABLE CONTENT
+(
+CONTENT_ID INT AUTO_INCREMENT PRIMARY KEY,
+CONTENT_TOPIC VARCHAR(30),
+DESCRIPTION TEXT(100),
+LINK1 VARCHAR(150),
+LINK2 VARCHAR(150)
+);
+
+
+CREATE TABLE CENTER
+(
+CENTER_ID INT AUTO_INCREMENT PRIMARY KEY,
+CENTER_NAME VARCHAR(50),
+ADDRESS VARCHAR(100),
+TEL_NUMBER INT,
+REPRESENTATIVE VARCHAR(40),
+FOREIGN KEY(REPRESENTATIVE) REFERENCES UNIVERSITY_STUDENT(EMAIL)
+);
+
+
+CREATE TABLE SCHOOL
+(
+SCHOOL_ID INT AUTO_INCREMENT PRIMARY KEY,
+SCHOOL_NAME VARCHAR(50),
+TEL_NUMBER INT,
+CENTER_ID INT,
+FOREIGN KEY(CENTER_ID) REFERENCES CENTER(CENTER_ID)
+);
+
+
+CREATE TABLE SESSION
+(
+SESSION_ID INT AUTO_INCREMENT PRIMARY KEY,
+DATE DATE,
+TIME TIME,
+SESSION_NUMBER INT,
+SESSION_LINK VARCHAR(100),
+CENTER_ID INT,
+TUTOR VARCHAR(40),
+CONTENT_ID INT,
+FOREIGN KEY(CENTER_ID) REFERENCES CENTER(CENTER_ID),
+FOREIGN KEY(TUTOR) REFERENCES UNIVERSITY_STUDENT(EMAIL),
+FOREIGN KEY(CONTENT_ID) REFERENCES CONTENT(CONTENT_ID)
+);
+
+
+CREATE TABLE STUDENT
+(
+EMAIL VARCHAR(40) PRIMARY KEY,
+BIRTHDAY DATE,
+ADDRESS VARCHAR(100),
+GRADE INT,
+SCHOOL_ID INT,
+FOREIGN KEY(SCHOOL_ID) REFERENCES SCHOOL(SCHOOL_ID)
+);
+
+
+CREATE VIEW View_Session_Main_Home(Date, Time, Topic, Ce_Name) AS
+SELECT S.DATE, S.TIME, CO.CONTENT_TOPIC, CE.CENTER_NAME
+FROM SESSION S, CONTENT CO, CENTER CE
+WHERE S.CENTER_ID = CE.CENTER_ID AND S.CONTENT_ID = CO.CONTENT_ID
+ORDER BY DATE;
+
+
+CREATE VIEW View_Session_User(Date, Time, Ce_Name, Se_Number, Se_Link, Topic, Description, Tutor, Email, Co_link1, Co_Link2) AS
+SELECT S.DATE, S.TIME, CE.CENTER_NAME, S.SESSION_NUMBER, S.SESSION_LINK, CO.CONTENT_TOPIC,
+CO.DESCRIPTION, CONCAT(U.FIRSTNAME, " " , U.LASTNAME), S.TUTOR, CO.LINK1, CO.LINK2
+FROM SESSION S, CONTENT CO, CENTER CE, USER U
+WHERE S.CENTER_ID = CE.CENTER_ID AND S.CONTENT_ID = CO.CONTENT_ID AND S.TUTOR = U.EMAIL 
+AND DATE > CURDATE()
+ORDER BY DATE;
+
+
+CREATE VIEW View_ADM_Request(FName, LName, Email, Dept, Enrollment_No) AS
+SELECT U.FIRSTNAME, U.LASTNAME, U.EMAIL, A.DEPARTMENT, A.ENROLLMENT_NUMBER
+FROM USER U, ADMINISTRATOR A 
+WHERE U.EMAIL = A.EMAIL AND U.USERID IS NULL;
+
+
+CREATE VIEW View_UGS_Request(FName, LName, Email, Dept, Enrollment_No) AS
+SELECT U.FIRSTNAME, U.LASTNAME, U.EMAIL, UNI.DEPARTMENT, UNI.UNI_REG_NO
+FROM USER U, UNIVERSITY_STUDENT UNI
+WHERE U.EMAIL = UNI.EMAIL AND U.USERID IS NULL;
+
+
+CREATE VIEW View_STD_Request(FName, LName, Email, School, Grade) AS
+SELECT U.FIRSTNAME, U.LASTNAME, U.EMAIL, SC.SCHOOL_NAME, S.GRADE
+FROM USER U, STUDENT S, SCHOOL SC
+WHERE U.EMAIL = S.EMAIL AND S.SCHOOL_ID = SC.SCHOOL_ID 
+AND U.USERID IS NULL;
+
+
+DELIMITER //
+CREATE PROCEDURE Register_ADM
+(IN EMAIL VARCHAR(40), IN FIRSTNAME VARCHAR(30),
+IN LASTNAME VARCHAR(30),IN TEL_NUMBER INT,
+IN PASSWORD VARCHAR(20), IN ENROLLMENT_NUMBER CHAR(10),IN DEPARTMENT VARCHAR(40))
+BEGIN 
+INSERT INTO USER
+VALUES(EMAIL, NULL, FIRSTNAME, LASTNAME, "ADM", TEL_NUMBER, PASSWORD);
+INSERT INTO ADMINISTRATOR
+VALUES(EMAIL, ENROLLMENT_NUMBER, DEPARTMENT);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Register_UGS
+(IN EMAIL VARCHAR(40), IN FIRSTNAME VARCHAR(30),
+IN LASTNAME VARCHAR(30),IN TEL_NUMBER INT,
+IN PASSWORD VARCHAR(20), IN UNI_REG_NO CHAR(8),IN DEPARTMENT VARCHAR(40))
+BEGIN 
+INSERT INTO USER
+VALUES(EMAIL, NULL, FIRSTNAME, LASTNAME, "UGS", TEL_NUMBER, PASSWORD);
+INSERT INTO UNIVERSITY_STUDENT
+VALUES(EMAIL, UNI_REG_NO, DEPARTMENT);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Register_STD
+(IN E_MAIL VARCHAR(40), IN FIRST_NAME VARCHAR(30),
+IN LAST_NAME VARCHAR(30),IN TELNUMBER INT,
+IN PASS_WORD VARCHAR(20),IN SCHOOLNAME VARCHAR(50), IN BIRTH_DAY DATE, IN ADD_RESS VARCHAR(100),
+IN GR_ADE INT)
+BEGIN
+DECLARE SCHOOLID INT DEFAULT (SELECT SCHOOL_ID FROM SCHOOL WHERE SCHOOL_NAME=SCHOOLNAME);
+INSERT INTO USER
+VALUES(E_MAIL, NULL, FIRST_NAME, LAST_NAME, "STD", TELNUMBER, PASS_WORD);
+INSERT INTO STUDENT
+VALUES(E_MAIL, BIRTH_DAY, ADD_RESS, GR_ADE, SCHOOLID);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Update_ADM_UGS
+(IN E_MAIL VARCHAR(40), IN FIRST_NAME VARCHAR(30),
+IN LAST_NAME VARCHAR(30),IN TELNUMBER INT)
+BEGIN 
+UPDATE USER
+SET FIRSTNAME = FIRST_NAME, LASTNAME=LAST_NAME, TEL_NUMBER =TELNUMBER
+WHERE EMAIL=E_MAIL;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Update_STD
+(IN E_MAIL VARCHAR(40), IN FIRST_NAME VARCHAR(30),
+IN LAST_NAME VARCHAR(30),IN TELNUMBER INT,IN ADD_RESS VARCHAR(100),
+IN GR_ADE INT)
+BEGIN 
+UPDATE USER
+SET FIRSTNAME = FIRST_NAME, LASTNAME=LAST_NAME, TEL_NUMBER =TELNUMBER
+WHERE EMAIL=E_MAIL;
+UPDATE STUDENT
+SET ADDRESS=ADD_RESS, GRADE=GR_ADE
+WHERE EMAIL=E_MAIL;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Update_Password
+(IN E_MAIL VARCHAR(40), IN NEW_PASSWORD VARCHAR(20))
+BEGIN
+UPDATE USER
+SET PASSWORD = NEW_PASSWORD
+WHERE EMAIL=E_MAIL;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Create_Center
+(IN CENTER_NAME VARCHAR(50), IN ADDRESS VARCHAR(100), IN TEL_NUMBER INT, IN REPRESENTATIVE VARCHAR(40))
+BEGIN
+INSERT INTO CENTER(CENTER_NAME, ADDRESS, TEL_NUMBER, REPRESENTATIVE)
+VALUES(CENTER_NAME, ADDRESS, TEL_NUMBER, REPRESENTATIVE);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Create_School
+(IN SCHOOLNAME VARCHAR(50), IN TEL_NUMBER INT, IN CENTERNAME VARCHAR(50))
+BEGIN
+DECLARE CENTERID INT DEFAULT (SELECT CENTER_ID FROM CENTER WHERE CENTER_NAME=CENTERNAME);
+INSERT INTO SCHOOL(SCHOOL_NAME, TEL_NUMBER, CENTER_ID)
+VALUES(SCHOOLNAME, TEL_NUMBER, CENTERID);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Create_Content
+(IN CONTENT_TOPIC VARCHAR(30), IN DESCRIPTION TEXT(100), IN LINK1 VARCHAR(150), IN LINK2 VARCHAR(150))
+BEGIN
+INSERT INTO CONTENT(CONTENT_TOPIC, DESCRIPTION, LINK1, LINK2)
+VALUES(CONTENT_TOPIC, DESCRIPTION, LINK1, LINK2);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Create_Session
+(IN DATE_ DATE, IN TIME_ TIME, IN SESSIONNUMBER INT, IN SESSIONLINK VARCHAR(100), IN CENTERNAME VARCHAR(50), IN TUTOR_ VARCHAR(40), IN CONTENTTOPIC VARCHAR(30))
+BEGIN
+DECLARE CONTENTID INT DEFAULT (SELECT CONTENT_ID FROM CONTENT WHERE CONTENT_TOPIC=CONTENTTOPIC);
+DECLARE CENTERID INT DEFAULT (SELECT CENTER_ID FROM CENTER WHERE CENTER_NAME=CENTERNAME);
+INSERT INTO SESSION(DATE, TIME, SESSION_NUMBER, SESSION_LINK, CENTER_ID, TUTOR, CONTENT_ID)
+VALUES(DATE_, TIME_, SESSIONNUMBER, SESSIONLINK, CENTERID, TUTOR_, CONTENTID);
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Update_Center
+(IN CENTERNAME VARCHAR(50), IN NEW_CENTER_NAME VARCHAR(50), IN ADDRESS VARCHAR(100), IN TEL_NUMBER INT, IN REPRESENTATIVE VARCHAR(40))
+BEGIN
+DECLARE CENTERID INT DEFAULT (SELECT CENTER_ID FROM CENTER WHERE CENTER_NAME=CENTERNAME);
+UPDATE CENTER
+SET CENTER_NAME=NEW_CENTER_NAME, ADDRESS=ADDRESS, TEL_NUMBER=TEL_NUMBER, REPRESENTATIVE=REPRESENTATIVE
+WHERE CENTER_ID=CENTERID;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Update_School
+(IN SCHOOLID INT, IN NEW_SCHOOL_NAME VARCHAR(50), IN TEL_NUMBER INT)
+BEGIN
+UPDATE SCHOOL
+SET SCHOOL_NAME=NEW_SCHOOL_NAME, TEL_NUMBER=TEL_NUMBER
+WHERE SCHOOL_ID=SCHOOLID;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Update_Content
+(IN CONTENTID INT, IN CONTENTTOPIC VARCHAR(30), IN DESCRIPTION TEXT(100), IN LINK1 VARCHAR(150), IN LINK2 VARCHAR(150))
+BEGIN 
+UPDATE CONTENT
+SET CONTENT_TOPIC=CONTENTTOPIC, DESCRIPTION=DESCRIPTION, LINK1=LINK1, LINK2=LINK2
+WHERE CONTENT_ID=CONTENTID;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Update_Session
+(IN CENTERNAME VARCHAR(50), IN SESSIONNUMBER INT, IN DATE DATE, IN TIME TIME, IN NEW_SESSION_NUMBER INT, IN SESSION_LINK VARCHAR(100), IN NEW_CENTER_NAME VARCHAR(50), IN TUTOR VARCHAR(40), IN CONTENTTOPIC VARCHAR(30))
+BEGIN
+DECLARE CENTERID INT DEFAULT (SELECT CENTER_ID FROM CENTER WHERE CENTER_NAME=CENTERNAME);
+DECLARE SESSIONID INT DEFAULT (SELECT SESSION_ID FROM SESSION WHERE CENTER_ID=CENTERID AND SESSION_NUMBER=SESSIONNUMBER);
+DECLARE NEW_CENTER_ID INT DEFAULT (SELECT CENTER_ID FROM CENTER WHERE CENTER_NAME=NEW_CENTER_NAME);
+DECLARE CONTENTID INT DEFAULT (SELECT CONTENT_ID FROM CONTENT WHERE CONTENT_TOPIC=CONTENTTOPIC);
+UPDATE SESSION
+SET DATE=DATE, TIME=TIME, SESSION_NUMBER=NEW_SESSION_NUMBER, SESSION_LINK=SESSION_LINK, CENTER_ID=NEW_CENTER_ID, TUTOR=TUTOR, CONTENT_ID=CONTENTID
+WHERE SESSION_ID=SESSIONID;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Accept_Request
+(IN E_MAIL VARCHAR(40), IN USER_ID CHAR(6))
+BEGIN 
+UPDATE USER
+SET USERID=USER_ID
+WHERE EMAIL=E_MAIL;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Reject_Request
+(IN E_MAIL VARCHAR(40))
+BEGIN
+DELETE FROM USER
+WHERE EMAIL=E_MAIL;
+DELETE FROM ADMINISTRATOR
+WHERE EMAIL=E_MAIL;
+DELETE FROM UNIVERSITY_STUDENT
+WHERE EMAIL=E_MAIL;
+DELETE FROM STUDENT
+WHERE EMAIL=E_MAIL;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Remove_Content
+(IN CONTENTID INT)
+BEGIN
+DELETE FROM CONTENT
+WHERE CONTENT_ID=CONTENTID;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Remove_Center
+(IN CENTERNAME VARCHAR(50))
+BEGIN
+DECLARE CENTERID INT DEFAULT (SELECT CENTER_ID FROM CENTER WHERE CENTER_NAME=CENTERNAME);
+DELETE FROM CENTER
+WHERE CENTER_ID=CENTERID;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Remove_School
+(IN SCHOOLID INT)
+BEGIN
+DELETE FROM SCHOOL
+WHERE SCHOOL_ID=SCHOOLID;
+END //
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE Remove_Session
+(IN CENTERNAME VARCHAR(50), IN SESSIONNUMBER INT)
+BEGIN
+DECLARE CENTERID INT DEFAULT (SELECT CENTER_ID FROM CENTER WHERE CENTER_NAME=CENTERNAME);
+DECLARE SESSIONID INT DEFAULT (SELECT SESSION_ID FROM SESSION WHERE CENTER_ID=CENTERID AND SESSION_NUMBER=SESSIONNUMBER);
+DELETE FROM SESSION
+WHERE SESSION_ID=SESSIONID;
+END //
+DELIMITER ;
+
+
+CALL Register_ADM('sanath123@gmail.com'           ,'Sanath'    ,'Weerasooriya' ,0712356789 ,'sanath#12'    ,'eng/16/123'  ,'Computer Engineering');
+CALL Register_ADM('ajithkelum12@gmail.com'        ,'Ajith'     ,'Kelum'         ,0779685456 ,'ajith@90'     ,'eng/15/230'  ,'Civil Engineering');
+CALL Register_ADM('nihalperera61@gmail.com'       ,'Nihal'     ,'Perera'       ,0702564851 ,'Nihal1919'    ,'eng/15/214'  ,'Chemical & Process Engineering');
+CALL Register_ADM('darmadasakumara@gmail.com'     ,'Darmadasa' ,'Kumara'       ,0756418324 ,'Darmadasa999' ,'eng/14/005'  ,'Mechanical Engineering');
+CALL Register_ADM('chamindarathkubure@gmail.com'  ,'Chaminda'  ,'Eranga'       ,0787732620 ,'Chami@2525'   ,'eng/12/145'  ,'Manufacturing & Industrial Engineering');
+CALL Register_ADM('tharangajeewaka@gmail.com'     ,'Tharanga'  ,'Jeewaka'      ,0721195200 ,'Tharanga@2'   ,'eng/16/301'  ,'Electrical & Electronic Engineering');
+CALL Register_ADM('kelumnihal@gmail.com'          ,'Kelum'     ,'Nihal'        ,0791245    ,'Kelum#456'    ,'eng/18/120'  ,'Electrical & Electronic Engineering');
+
+
+CALL Accept_Request('sanath123@gmail.com','ADM001');
+CALL Accept_Request('ajithkelum12@gmail.com','ADM002');
+CALL Accept_Request('nihalperera61@gmail.com','ADM003');
+CALL Accept_Request('darmadasakumara@gmail.com','ADM004');
+CALL Accept_Request('chamindarathkubure@gmail.com','ADM005');
+CALL Accept_Request('tharangajeewaka@gmail.com','ADM006');
+
+
+CALL Reject_Request('kelumnihal@gmail.com');
+
+
+CALL Register_UGS('ruwankanchana@gmail.com'       ,'Ruwan'      ,'Kanchana'     ,0712356780 , 'ruwan123'    ,'E/18/420' , 'Computer Engineering');
+CALL Register_UGS('kamalbandara@gmail.com'        ,'Kamal'      ,'Bandara'      ,0712356781 , 'kamal123'    ,'E/18/421' , 'Chemical & Process Engineering');
+CALL Register_UGS('nimalabishek@gmail.com'        ,'Nimal'      ,'Abishek'      ,0712356782 , 'nimal123'    ,'E/18/422' , 'Manufacturing & Industrial Engineering');
+CALL Register_UGS('nipunrathnayake@gmail.com'     ,'Nipun'      ,'Rathnayake'   ,0712356783 , 'nipun123'    ,'E/18/423' , 'Computer Engineering');
+CALL Register_UGS('ajithabeykon@gmail.com'        ,'Ajith'      ,'Abeykon'      ,0712356784 , 'ajith123'    ,'E/18/424' , 'Electrical & Electronic Engineering');
+CALL Register_UGS('achinidevindi@gmail.com'       ,'Achini'     ,'Devindi'      ,0712356785 , 'achini12'    ,'E/18/425' , 'Computer Engineering');
+CALL Register_UGS('roshansandaruwan@gmail.com'    ,'Roshan'     ,'Sandaruwan'   ,0712356786 , 'roshan12'    ,'E/18/426' , 'Manufacturing & Industrial Engineering');
+CALL Register_UGS('esalaharshamal@gmail.com'      ,'Esala'      ,'Harshamal'    ,0712356787 , 'esala123'    ,'E/18/427' , 'Mechanical Engineering');
+CALL Register_UGS('bhagyajayawardane@gmail.com'   ,'Bhagya'     ,'Jayawardane'  ,0712356788 , 'bhagya12'    ,'E/18/428' , 'Chemical & Process Engineering');
+CALL Register_UGS('sarangaliyanage@gmail.com'     ,'Saranga'    ,'Liyanage'     ,0712356789 , 'saranga1'    ,'E/18/429' , 'Computer Engineering');
+CALL Register_UGS('sunimallokusidda@gmail.com'    ,'Sunial'    ,'Lokusidda'     ,0712356712 , 'sunimal1'    ,'E/18/430' , 'Mechanical Engineering');
+CALL Register_UGS('vikumpathiraja@gmail.com'      ,'Vikum'      ,'Pathiraja'    ,0712356713 , 'vikum123'    ,'E/18/431' , 'Electrical & Electronic Engineering');
+CALL Register_UGS('tharindulakmal@gmail.com'      ,'Tharindu'   ,'Lakmal'       ,0712356714 , 'tharindu'    ,'E/18/432' , 'Manufacturing & Industrial Engineering');
+CALL Register_UGS('pradeepbandara@gmail.com'      ,'Pradeep'    ,'Bandara'      ,0712356715 , 'bandara1'    ,'E/18/433' , 'Civil Engineering');
+CALL Register_UGS('pahanakaash@gmail.com'         ,'Pahan'      ,'Akaash'       ,0712356716 , 'pahan123'    ,'E/18/434' , 'Civil Engineering');
+CALL Register_UGS('kasuntharuka@gmail.com'        ,'Kasun'      ,'Tharuka'      ,0712356717 , 'kasun123'    ,'E/18/435' , 'Manufacturing & Industrial Engineering');
+CALL Register_UGS('dinalikaumadi@gmail.com'       ,'Dinali'     ,'Kaumadi'      ,0712356718 , 'dinali12'    ,'E/18/436' , 'Civil Engineering');
+CALL Register_UGS('deshanbandara@gmail.com'       ,'Deshan'     ,'Bandara'      ,0712356719 , 'deshan12'    ,'E/18/437' , 'Computer Engineering');
+CALL Register_UGS('mayanthapiris@gmail.com'      ,'Mayantha'   ,'Piris'        ,0712356720 , 'mayantha'    ,'E/18/438' , 'Civil Engineering');
+CALL Register_UGS('saliyabandara@gmail.com'       ,'Salya'     ,'Bandara'       ,0712356721 , 'saliya12'    ,'E/18/439' , 'Manufacturing & Industrial Engineering');
+
+
+CALL Accept_Request('ruwankanchana@gmail.com'       ,'UGS000');
+CALL Accept_Request('kamalbandara@gmail.com'        ,'UGS001');
+CALL Accept_Request('nimalabishek@gmail.com'        ,'UGS002');
+CALL Accept_Request('nipunrathnayake@gmail.com'     ,'UGS003');
+CALL Accept_Request('ajithabeykon@gmail.com'        ,'UGS004');
+CALL Accept_Request('achinidevindi@gmail.com'       ,'UGS005');
+CALL Accept_Request('roshansandaruwan@gmail.com'    ,'UGS006');
+CALL Accept_Request('esalaharshamal@gmail.com'      ,'UGS007');
+CALL Accept_Request('bhagyajayawardane@gmail.com'   ,'UGS008');
+CALL Accept_Request('sarangaliyanage@gmail.com'     ,'UGS009');
+CALL Accept_Request('sunimallokusidda@gmail.com'    ,'UGS010');
+CALL Accept_Request('vikumpathiraja@gmail.com'      ,'UGS011');
+CALL Accept_Request('tharindulakmal@gmail.com'      ,'UGS012');
+CALL Accept_Request('pradeepbandara@gmail.com'      ,'UGS013');
+CALL Accept_Request('pahanakaash@gmail.com'         ,'UGS014');
+
+
+CALL Reject_Request('kasuntharuka@gmail.com' );
+CALL Reject_Request('dinalikaumadi@gmail.com');
+
+
+CALL Update_ADM_UGS('chamindarathkubure@gmail.com' ,'Chaminda' ,'Bathmubura' ,0787732620);
+CALL Update_ADM_UGS('tharangajeewaka@gmail.com'    ,'Tharanga' ,'Jeewaka'    ,0701245601);
+CALL Update_ADM_UGS('saliyabandara@gmail.com'      ,'Saliya'   ,'Bandara'      ,0712356721);
+CALL Update_ADM_UGS('sunimallokusidda@gmail.com'   ,'Sunimal'  ,'Lokusidda'    ,0712335721);
+
+
+CALL Create_Content('Introduction to Python', 'Introduction to Programming languages and how computers understand us', 'https://www.geeksforgeeks.org/introduction-to-programming-languages/', 'https://www.w3schools.com/python/python_intro.asp');
+CALL Create_Content('Hello World', 'Install and getting started', 'https://www.w3schools.com/python/python_getstarted.asp','https://www.geeksforgeeks.org/python-language-introduction/');
+CALL Create_Content('Python Syntax', 'Execute Syntax, Indentation, Comments', 'https://www.w3schools.com/python/python_syntax.asp','https://www.geeksforgeeks.org/python-3-basics/?ref=lbp');
+CALL Create_Content('Introduction to Variables', 'Create variables, Variable Names, Local and Global Variables', 'https://www.w3schools.com/python/python_variables.asp', 'https://www.w3schools.com/python/python_variables_names.asp');
+CALL Create_Content('Introduction to Data Types', 'Introduction to Built-in data types','https://www.w3schools.com/python/python_datatypes.asp', 'https://www.programiz.com/python-programming/variables-datatypes');
+CALL Create_Content('Strings', 'Introduction to Strings','https://www.w3schools.com/python/python_strings.asp', 'https://www.programiz.com/python-programming/variables-datatypes');
+
+
+CALL Update_Content('Hello World', 'Install and getting started', 'https://www.w3schools.com/python/python_getstarted.asp','https://www.geeksforgeeks.org/py','thon-language-introduction/');
+
+CALL Remove_Content('Strings');
+
+
+CALL Create_Center('MATTEGODA VIDYADEEPA M.V.'   ,'MATTEGODA VIDYADEEPA M.V. MATTEGODA, PANNIPITIYA'          ,0112256480, 'ruwankanchana@gmail.com');
+CALL Create_Center('KATUKURUNDA DHARMAPALA M.V.' ,'KATUKURUNDA DHARMAPALA M.V. KATUKURUNDA, KALUTARA'         ,0342215251, 'nimalabishek@gmail.com');
+CALL Create_Center('RATHNAWALI B.V.'             ,'RATHNAWALI B.V. C0L0MBO ROAD, GAMPAHA'                     ,0122345100, 'achinidevindi@gmail.com');
+CALL Create_Center('DARMALOKA K.V.'              ,'DARMALOKA K.V. WATAPULUWA, KANDY'                          ,0451112201, 'sarangaliyanage@gmail.com');
+CALL Create_Center('SRI SANGHAMITHTHA M.V.'      ,'SRI SANGHAMITHTHA M.V. DUTUGEMUNU MW, PAMANKADA, DEHIWELA' ,0112362510, 'vikumpathiraja@gmail.com');
+CALL Create_Center('PRESIDENTS COLLEGE'          ,'PRESIDENTS COLLEGE SRI JPURA, KOTTE.'                      ,0302516125, 'nimalabishek@gmail.com');
+ 
+
+CALL Create_School('MATTEGODA VIDYADEEPA M.V.'   ,0112256480 ,'MATTEGODA VIDYADEEPA M.V.');
+CALL Create_School('MAGAMMANA M.V.'              ,0112115785 ,'MATTEGODA VIDYADEEPA M.V.');
+CALL Create_School('KATUKURUNDA DHARMAPALA M.V.' ,0342215251 ,'KATUKURUNDA DHARMAPALA M.V.');
+CALL Create_School('NANDUWA SRI SOMANANDA K.V.'  ,0341265409 ,'KATUKURUNDA DHARMAPALA M.V.');
+CALL Create_School('RATHNAWALI B.V.'             ,0122345100 ,'RATHNAWALI B.V.');
+CALL Create_School('AMUNUGODA KUMARADASA K.V.'   ,0113234580 ,'RATHNAWALI B.V.');
+CALL Create_School('DARMALOKA K.V.'              ,0451112201 ,'DARMALOKA K.V.');
+CALL Create_School('RASINDEV K.V.'               ,0456231182 ,'DARMALOKA K.V.');
+CALL Create_School('SRI SANGHAMITHTHA M.V.'      ,0112362510 ,'SRI SANGHAMITHTHA M.V.');
+CALL Create_School('ROMAN CATHOLIC TAMIL MIX V.' ,0122312001 ,'SRI SANGHAMITHTHA M.V.');
+CALL Create_School('PRESIDENTS COLLEGE'          ,0302516125 ,'PRESIDENTS COLLEGE');
+
+
+CALL Update_Center('DARMALOKA K.V.','DARMALOKA K.V.','DARMALOKA K.V. WATAPULUWA, MAIN ROAD, KANDY', 0451112201, 'sarangaliyanage@gmail.com');
+
+
+CALL Update_School('MATTEGODA VIDYADEEPA M.V.'  ,'MATTEGODA VIDYADEEPA M.V.' ,0113254512);
+CALL Update_School('NANDUWA SRI SOMANANDA K.V.' ,'NANDUWA SOMANANDA K.V.'    ,0341265409);
+
+
+CALL Remove_School('PRESIDENTS COLLEGE');
+
+CALL Remove_Center('PRESIDENTS COLLEGE');
+
+
+CALL Register_STD('kamaldeshapriya@gmail.com'   ,'Kamal'        ,'Deshapriya'   ,0712354576 , 'kamal112'    ,'MATTEGODA VIDYADEEPA M.V.'    ,'2008-12-20',   'No 132, Peradeniya, Kandy'        , 9);
+CALL Register_STD('pubududeshan@gmail.com'      ,'Pubudu'       ,'Deshan'       ,0712345761 , 'pubudu12'    ,'MAGAMMANA M.V.'               ,'2008-12-20',   'No 12, Kuliyapitiya, kurunegala'  , 9);
+CALL Register_STD('sumudukelum@gmail.com'       ,'Sumudu'       ,'Kelum'        ,0576356721 , 'sumudu12'    ,'KATUKURUNDA DHARMAPALA M.V.'  ,'2008-12-20',   'No 3, Colombo 3'                  , 9);
+CALL Register_STD('achinthalakmal@gmail.com'    ,'Achintha'     ,'Lakmal'       ,0712345761 , 'achintha'    ,'NANDUWA SOMANANDA K.V.'       ,'2008-12-20',   'No 5, Colombo-road, Kandy'        , 9);
+CALL Register_STD('nipunabishek@gmail.com'      ,'Nipun'        ,'Abishek'      ,0745766721 , 'nipun123'    ,'RATHNAWALI B.V.'              ,'2008-12-20',   'No 1A/12, Negombo'                , 9);
+CALL Register_STD('pahanrathnayake@gmail.com'   ,'Pahan'        ,'Rathnayake'   ,0712354576 , 'pahan123'    ,'AMUNUGODA KUMARADASA K.V.'    ,'2008-12-20',   'No 12, Embilipitya, Rathnapura'   , 9);
+CALL Register_STD('esalalokusidda@gmail.com'    ,'Esala'        ,'Lokusidda'    ,0745766721 , 'esala123'    ,'DARMALOKA K.V.'               ,'2008-12-20',   'No 1, Thanamalwila, Monaragala'   , 9);
+CALL Register_STD('kasunthushara@gmail.com'     ,'Kasun'        ,'Thushar'      ,0712354576 , 'kasun123'    ,'SRI SANGHAMITHTHA M.V.'       ,'2008-12-20',   'No 71, WIharagoda, Badulla'       , 9);
+CALL Register_STD('gayanbandara@gmail.com'      ,'Gayan'        ,'Bandara'      ,0457656721 , 'gayan123'    ,'RASINDEV K.V.'                ,'2008-12-20',   'No 25, Passara-Road, Badulla'     , 9);
+CALL Register_STD('kavindyagamage@gmail.com'    ,'Kavindya'     ,'Gamage'       ,0712354576 , 'kavindya'    ,'ROMAN CATHOLIC TAMIL MIX V.'  ,'2008-12-20',   'No 32, Peradeniya-road, Gampola'  , 9);
+CALL Register_STD('nadithiliyanage@gmail.com'   ,'Nadithi'      ,'Liyanage'     ,0457656721 , 'nadithi1'    ,'MATTEGODA VIDYADEEPA M.V.'    ,'2008-12-20',   'No 98, Lal Sewana, Kurunegala'    , 10);
+CALL Register_STD('sanduniperera@gmail.com'     ,'Sanduni'      ,'Perea'        ,0714576721 , 'sanduni1'    ,'MAGAMMANA M.V.'               ,'2008-12-20',   'No 2B/132, Shan niwasa, Bogambara', 10);
+CALL Register_STD('keshanbandara@gmail.com'     ,'Keshan'       ,'Bandara'      ,0457656721 , 'keshan12'    ,'KATUKURUNDA DHARMAPALA M.V.'  ,'2008-12-20',   'No 54, Kandy'                     , 10);
+CALL Register_STD('ravindutharuka@gmail.com'    ,'Ravindu'      ,'Tharuka'      ,0712354576 , 'ravindu1'    ,'NANDUWA SOMANANDA K.V.'       ,'2008-12-20',   'No 34, Mirahawaththa, Welimada'   , 10);
+CALL Register_STD('shashikaprasad@gmail.com'    ,'Shashika'     ,'Prasad'       ,0745766721 , 'shashika'    ,'RATHNAWALI B.V.'              ,'2008-12-20',   'No 33, Kahagolla, Diyathalawa'    , 10);
+CALL Register_STD('chamodbandara@gmail.com'     ,'Chamod'       ,'Bandara'      ,0712345761 , 'chamod12'    ,'AMUNUGODA KUMARADASA K.V.'    ,'2008-12-20',   'No 34, Rajagiriya, Colombo 7'     , 10);
+CALL Register_STD('thiliniranathunga@gmail.com' ,'Thilini'      ,'Ranathunga'   ,0745766721 , 'thilini1'    ,'DARMALOKA K.V.'               ,'2008-12-20',   'No 65, Pattipola, Dehiwala'       , 10);
+CALL Register_STD('chathuraperera@gmail.com'    ,'Chathra'     ,'Perea'         ,0712345761 , 'chathura'    ,'SRI SANGHAMITHTHA M.V.'       ,'2008-12-20',   'No 78, Poththapitya, Kaluthara'   , 10);
+CALL Register_STD('isharagayashan@gmail.com'    ,'Ishara'       ,'Gayashan'     ,0457656721 , 'ishara12'    ,'RASINDEV K.V.'                ,'2008-12-20',   'No 78, Raja mawatha, Galle'       , 10);
+CALL Register_STD('nimeshmanupriya@gmail.com'   ,'Nimesh'       ,'Manupriya'    ,0712345761 , 'nimesh12'    ,'ROMAN CATHOLIC TAMIL MIX V.'  ,'2008-12-20',   'No 45, Walassmulla, Thangalle'    , 10);
+
+
+CALL Accept_Request('kamaldeshapriya@gmail.com'   ,'STD000');
+CALL Accept_Request('pubududeshan@gmail.com'      ,'STD001');
+CALL Accept_Request('sumudukelum@gmail.com'       ,'STD002');
+CALL Accept_Request('achinthalakmal@gmail.com'    ,'STD003');
+CALL Accept_Request('nipunabishek@gmail.com'      ,'STD004');
+CALL Accept_Request('pahanrathnayake@gmail.com'   ,'STD005');
+CALL Accept_Request('esalalokusidda@gmail.com'    ,'STD006');
+CALL Accept_Request('kasunthushara@gmail.com'     ,'STD007');
+CALL Accept_Request('gayanbandara@gmail.com'      ,'STD008');
+CALL Accept_Request('kavindyagamage@gmail.com'    ,'STD009');
+CALL Accept_Request('nadithiliyanage@gmail.com'   ,'STD010');
+CALL Accept_Request('sanduniperera@gmail.com'     ,'STD011');
+CALL Accept_Request('keshanbandara@gmail.com'     ,'STD012');
+CALL Accept_Request('ravindutharuka@gmail.com'    ,'STD013');
+CALL Accept_Request('shashikaprasad@gmail.com'    ,'STD014');
+
+
+CALL Reject_Request('chamodbandara@gmail.com');
+CALL Reject_Request('thiliniranathunga@gmail.com' );
+
+
+CALL Update_STD('chathuraperera@gmail.com'      ,'Chathura'     ,'Perea'        ,0712345761 ,'No 78, Poththapitya, Kaluthara'   , 9);
+CALL Update_STD('kasunthushara@gmail.com'       ,'Kasun'        ,'Thushara'     ,0712354576 ,'No 71, WIharagoda, Badulla'       , 9);
+
+CALL Create_Session('2022-05-05' ,'08:00:00' ,1 ,'https://zoom.us/j/3702086584?pwd=VFJCWDllbDI3RHAwVUhjdDFzdCtmZz09' ,'MATTEGODA VIDYADEEPA M.V.'   ,'ruwankanchana@gmail.com'  ,'Introduction to Python');
+CALL Create_Session('2022-07-21' ,'08:00:00' ,1 ,'https://zoom.us/j/3702086584?pwd=VFJCWDllbDI3RHAwVUhjdDFzdCtmZz09' ,'KATUKURUNDA DHARMAPALA M.V.' ,'kamalbandara@gmail.com'   ,'Python Syntax');
+CALL Create_Session('2022-06-23' ,'08:00:00' ,1 ,'https://zoom.us/j/3702086584?pwd=VFJCWDllbDI3RHAwVUhjdDFzdCtmZz09' ,'RATHNAWALI B.V.'             ,'nimalabishek@gmail.com'   ,'Introduction to Variables');
+CALL Create_Session('2022-05-15' ,'08:00:00' ,1 ,'https://zoom.us/j/3702086584?pwd=VFJCWDllbDI3RHAwVUhjdDFzdCtmZz09' ,'DARMALOKA K.V.'              ,'nipunrathnayake@gmail.com','Introduction to Python');
+CALL Create_Session('2022-04-09' ,'08:00:00' ,1 ,'https://zoom.us/j/3702086584?pwd=VFJCWDllbDI3RHAwVUhjdDFzdCtmZz09' ,'SRI SANGHAMITHTHA M.V.'      ,'ajithabeykon@gmail.com'   ,'Introduction to Data Types');
+
+
+CALL Update_Session('SRI SANGHAMITHTHA M.V.',1 ,'2022-04-01' ,'08:00:00' ,1 ,'https://zoom.us/j/3702086584?pwd=VFJCWDllbDI3RHAwVUhjdDFzdCtmZz09' ,'SRI SANGHAMITHTHA M.V.','ajithabeykon@gmail.com'   ,'Introduction to Data Types');
+CALL Update_Session('DARMALOKA K.V.'        ,1 ,'2022-05-15' ,'08:00:00' ,2 ,'https://zoom.us/j/3702086584?pwd=VFJCWDllbDI3RHAwVUhjdDFzdCtmZz09' ,'RATHNAWALI B.V.'       ,'nipunrathnayake@gmail.com','Introduction to Python');
+
+CALL Remove_Session('RATHNAWALI B.V.', 2);
+
+
+SELECT * FROM View_Session_Main_Home;
+SELECT * FROM View_Session_User;
+SELECT * FROM View_ADM_Request;
+SELECT * FROM View_UGS_Request;
+SELECT * FROM View_STD_Request;
+
+CALL Update_Password('nipunabishek@gmail.com'      , 'nipun1234' );
+select * from user;
+

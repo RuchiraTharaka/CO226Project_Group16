@@ -19,16 +19,43 @@
 
     // Processing form data when form is submitted
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        if(strlen(trim($_POST["userid"])) == 6){
-            $sql = "CALL Accept_Request(?, ?)";
+        if (isset($_POST['accept'])){
+            if(strlen(trim($_POST["userid"])) == 6){
+                $sql = "CALL Accept_Request(?, ?)";
+                if($stmt = mysqli_prepare($conn, $sql)){
+                    // Bind variables to the prepared statement as parameters
+                    // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
+                    mysqli_stmt_bind_param($stmt, "ss", $email, $userid);
+                    
+                    // Set parameters
+                    $email = trim($_POST["email"]);
+                    $userid = trim($_POST["userid"]);
+                    
+                    // Attempt to execute the prepared statement
+                    if(mysqli_stmt_execute($stmt)){
+                        header($_SERVER["PHP_SELF"]);
+                    }
+                    else{
+                        echo "Oops! Something went wrong. Please try again later.";
+                    }
+        
+                    // Close statement
+                    mysqli_stmt_close($stmt);
+                }
+            }
+            else {
+                $error = "Unable accept account. Invalid UserID!";
+            }
+        }
+        elseif (isset($_POST['reject'])){
+            $sql = "CALL Reject_Request(?)";
             if($stmt = mysqli_prepare($conn, $sql)){
                 // Bind variables to the prepared statement as parameters
                 // mysqli_stmt_bind_param($stmt, "ssssis", $param_email, $fname, $lname, $module, $tel, $param_password);
-                mysqli_stmt_bind_param($stmt, "ss", $email, $userid);
+                mysqli_stmt_bind_param($stmt, "s", $email);
                 
                 // Set parameters
                 $email = trim($_POST["email"]);
-                $userid = trim($_POST["userid"]);
                 
                 // Attempt to execute the prepared statement
                 if(mysqli_stmt_execute($stmt)){
@@ -41,9 +68,6 @@
                 // Close statement
                 mysqli_stmt_close($stmt);
             }
-        }
-        else {
-            $error = "Unable accept account. Invalid UserID!";
         }
     }
 ?>
@@ -102,8 +126,9 @@
                                 <tr>
                                 <td></td>
                                 <td id=\"eqcell\">
-                                <input class=\"btn\" type=\"submit\" value=\"Accept\">
-                                <input class=\"btn\" type=\"submit\" value=\"Reject\"></td>
+                                <input class=\"btn\" type=\"submit\" name=\"accept\" value=\"Accept\">
+                                <input class=\"btn\" type=\"submit\" name=\"reject\" value=\"Reject\">
+                                </td>
                                 </tr>
                                 </table>
                                 </form>

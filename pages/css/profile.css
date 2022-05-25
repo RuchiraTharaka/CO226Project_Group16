@@ -25,39 +25,6 @@
     max-height: 700px;
 }
 
-.plbl {
-    color: rgb(0, 0, 0);
-    font-size: 1.6rem;
-    text-transform: none;
-    padding: 2rem 2rem 2rem 0;
-    min-height: 3rem;
-    text-align: left;
-}
-
-.pinplbl {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: rgb(0, 0, 0);
-    font-size: 1.6rem;
-    text-transform: none;
-    padding: 2rem 2rem 2rem 0.5rem;
-    width: 380px;
-    min-height: 3rem;
-    text-align: left;
-}
-
-.pinp {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    padding-left: 0.5rem;
-    border-radius: 3px;
-    font-size: 1.4rem;
-    text-transform: none;
-    min-height: 3rem;
-    align-items: flex-start;
-    width: 380px;
-    background: rgba(166, 162, 162, 0.6);
-    border-bottom: 1px solid rgb(0, 0, 0);
-}
-
 .details .btn {
     color: white;
     background-color: black;
